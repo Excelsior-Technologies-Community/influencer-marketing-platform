@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS creator_assets (
+  id CHAR(36) PRIMARY KEY,
+  creator_id CHAR(36) NOT NULL,
+  kind ENUM('PHOTO','PORTFOLIO','VERIFICATION') NOT NULL,
+  title VARCHAR(120) NOT NULL,
+  file_content MEDIUMBLOB NOT NULL,
+  mime_type VARCHAR(40) NOT NULL,
+  byte_size INT UNSIGNED NOT NULL,
+  content_hash CHAR(64) NOT NULL,
+  width SMALLINT UNSIGNED NULL,
+  height SMALLINT UNSIGNED NULL,
+  page_count TINYINT UNSIGNED NULL,
+  revision INT UNSIGNED NOT NULL DEFAULT 1,
+  created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  photo_slot TINYINT GENERATED ALWAYS AS (CASE WHEN kind='PHOTO' THEN 1 ELSE NULL END) STORED,
+  UNIQUE KEY uq_creator_photo(creator_id,photo_slot),
+  INDEX idx_creator_assets_kind(creator_id,kind),
+  CONSTRAINT fk_creator_asset_owner FOREIGN KEY(creator_id) REFERENCES creators(id) ON DELETE CASCADE
+) ENGINE=InnoDB;

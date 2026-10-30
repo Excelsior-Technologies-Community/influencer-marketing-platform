@@ -1,0 +1,15 @@
+import { useEffect,useState } from 'react';
+import { api } from '../../services/api.js';
+
+const errorText=error=>error.response?.data?.message||'Could not load user activity analytics. Please try again.';
+const count=value=>Number(value||0).toLocaleString();
+function duration(value){const seconds=Math.max(0,Math.round(Number(value||0)/1000));if(seconds<60)return `${seconds}s`;const minutes=Math.floor(seconds/60),remaining=seconds%60;return remaining?`${minutes}m ${remaining}s`:`${minutes}m`;}
+function Stat({label,value}){return <article><span>{label}</span><strong>{value}</strong></article>;}
+export default function AdminUserActivity(){
+  const [data,setData]=useState(null),[loading,setLoading]=useState(true),[error,setError]=useState(''),[reload,setReload]=useState(0);
+  useEffect(()=>{const controller=new AbortController();setLoading(true);setError('');api.get('/admin/analytics/user-screens',{signal:controller.signal}).then(response=>setData(response.data.data)).catch(failure=>{if(!controller.signal.aborted)setError(errorText(failure));}).finally(()=>{if(!controller.signal.aborted)setLoading(false);});return()=>controller.abort();},[reload]);
+  return <><div className="admin-section-heading"><div><p>Aggregated page activity across signed-in users. Individual identities are not shown.</p></div><button onClick={()=>setReload(value=>value+1)} disabled={loading}>Refresh activity</button></div>{loading?<p role="status">Loading user activity…</p>:error?<section className="admin-card"><p role="alert" className="form-error">{error}</p><button onClick={()=>setReload(value=>value+1)}>Retry</button></section>:data&&<>
+    <div className="admin-stats"><Stat label="Users tracked" value={count(data.summary.usersTracked)}/><Stat label="Total sessions" value={count(data.summary.totalSessions)}/><Stat label="Page visits" value={count(data.summary.totalPageViews)}/><Stat label="Average session" value={data.summary.totalSessions?duration(data.summary.averageSessionDurationMs):'No data yet'}/><Stat label="Active users today (UTC)" value={count(data.summary.activeUsersToday)}/><Stat label="Most visited screen" value={data.summary.mostVisitedPage||'No data yet'}/><Stat label="Most time spent" value={data.summary.highestTimeSpentPage||'No data yet'}/></div>
+    <section className="admin-card"><h2>Screen activity</h2>{!data.pages.length?<p>No page activity has been recorded yet. Signed-in page visits are saved when a user navigates to another screen.</p>:<div className="admin-table-wrap"><table><thead><tr><th>Screen</th><th>Visits</th><th>Users</th><th>Sessions</th><th>Total time</th><th>Average visit</th></tr></thead><tbody>{data.pages.map(row=><tr key={row.screen}><td>{row.screen}</td><td>{count(row.pageViews)}</td><td>{count(row.users)}</td><td>{count(row.sessions)}</td><td>{duration(row.totalDurationMs)}</td><td>{duration(row.averageDurationMs)}</td></tr>)}</tbody></table></div>}<p className="brand-helper">Routes are normalized to remove record IDs. No query strings, raw user agents or device fingerprints are stored.</p></section>
+  </>}</>;
+}

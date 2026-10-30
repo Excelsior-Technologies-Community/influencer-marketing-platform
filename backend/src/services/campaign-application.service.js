@@ -1,0 +1,9 @@
+import {randomUUID} from 'node:crypto';
+import {callProcedure,callProcedureSets} from '../repositories/procedure.repository.js';
+export const applicationService={
+ async eligibility(actor,campaign){const [r]=await callProcedure('sp_creator_application_eligibility',[actor,campaign]);const checks=[['identity','Verified identity',r.identityReady,'/creator/media'],['profile','Bio, location and at least one language',r.profileReady,'/creator/profile'],['category','An active category matching this campaign',r.categoryReady,'/creator/profile'],['platform','A social account on at least one campaign platform',r.platformReady,'/creator/social-accounts'],['unique','No previous application for this campaign',!r.applicationId,null]].map(([key,label,ready,path])=>({key,label,complete:Boolean(ready),path}));return {canApply:checks.every(x=>x.complete),checks,application:r.applicationId?{id:r.applicationId,status:r.applicationStatus}:null,note:'Checks use saved data and are repeated when you apply. Social accounts are self-reported. The Brand reviews campaign-specific requirements. Applying does not reserve a slot.'};},
+ async get(actor,id){const [rows,history]=await callProcedureSets('sp_creator_application_detail',[actor,id]);return {application:rows[0],history,canWithdraw:['PENDING','SHORTLISTED'].includes(rows[0].status)};},
+ async list(actor,q){const [items,counts]=await callProcedureSets('sp_creator_applications',[actor,q.status??null,q.q,q.pageSize,(q.page-1)*q.pageSize]),total=Number(counts[0].total);return {items,meta:{...q,total,totalPages:Math.ceil(total/q.pageSize)}};},
+ async apply(actor,campaign,input,requestId){const id=randomUUID();await callProcedure('sp_apply_campaign',[actor,campaign,id,input.pitch,requestId]);return this.get(actor,id);},
+ async withdraw(actor,id,input,requestId){await callProcedure('sp_withdraw_application',[actor,id,input.revision,input.reason,requestId]);return this.get(actor,id);}
+};

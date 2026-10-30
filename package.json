@@ -1,0 +1,26 @@
+{
+  "name": "influencer-marketing-platform",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w frontend",
+    "test": "npm run test -w backend",
+    "db:migrate": "npm run db:migrate -w backend",
+    "db:verify": "npm run db:verify -w backend",
+    "production:check": "npm run production:check -w backend",
+    "setup:module2": "npm run setup:module2 -w backend",
+    "payments:verify": "npm run payments:verify -w backend",
+    "wallets:verify": "npm run wallets:verify -w backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

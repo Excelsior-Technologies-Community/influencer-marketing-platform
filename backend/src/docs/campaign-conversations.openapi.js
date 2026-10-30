@@ -1,0 +1,18 @@
+const reply=(description,ok=true)=>({description,content:{'application/json':{schema:{$ref:`#/components/schemas/${ok?'Success':'Error'}`}}}});
+const id=(name)=>({in:'path',name,required:true,schema:{type:'string',format:'uuid'}});
+const protect={in:'header',name:'X-Requested-With',required:true,schema:{type:'string',enum:['InfluenceWeb']}};
+function routes(root,role){
+ const access=[401,403,404];
+ const errors=Object.fromEntries(access.map(status=>[status,reply('Authentication, participant access or conversation check failed',false)]));
+ return {
+  [`${root}/workspaces/{id}/conversations`]:{get:{tags:['Messaging'],summary:`List ${role} campaign conversations`,security:[{bearerAuth:[]}],parameters:[id('id')],responses:{200:reply('Approved campaign participant threads and unread counts'),...errors}}},
+  [`${root}/workspaces/{id}/conversations/{applicationId}/messages`]:{
+   get:{tags:['Messaging'],summary:'Read a page of campaign messages',security:[{bearerAuth:[]}],parameters:[id('id'),id('applicationId'),{in:'query',name:'page',schema:{type:'integer',minimum:1,default:1}},{in:'query',name:'pageSize',schema:{type:'integer',minimum:1,maximum:50,default:50}}],responses:{200:reply('Chronological message page, attachment metadata and read status'),...errors,422:reply('Invalid pagination',false)}},
+   post:{tags:['Messaging'],summary:'Send a text message',security:[{bearerAuth:[]}],parameters:[id('id'),id('applicationId'),protect],requestBody:{required:true,content:{'application/json':{schema:{type:'object',additionalProperties:false,required:['body'],properties:{body:{type:'string',minLength:1,maxLength:4000}}}}}},responses:{201:reply('Message saved and conversation refreshed'),...errors,422:reply('Invalid message body',false)}}
+  },
+  [`${root}/workspaces/{id}/conversations/{applicationId}/attachments`]:{post:{tags:['Messaging'],summary:'Send a message with one private attachment',security:[{bearerAuth:[]}],parameters:[id('id'),id('applicationId'),protect],requestBody:{required:true,content:{'multipart/form-data':{schema:{type:'object',required:['title','file'],properties:{body:{type:'string',maxLength:4000},title:{type:'string',minLength:2,maxLength:120},file:{type:'string',format:'binary'}}}}}},responses:{201:reply('Message and sanitized attachment saved'),...errors,413:reply('Attachment exceeds 5 MiB',false),422:reply('Unsupported or invalid attachment',false)}}},
+  [`${root}/workspaces/{id}/conversations/{applicationId}/read`]:{post:{tags:['Messaging'],summary:'Mark received messages as read',security:[{bearerAuth:[]}],parameters:[id('id'),id('applicationId'),protect],requestBody:{required:true,content:{'application/json':{schema:{type:'object',additionalProperties:false,required:['messageIds'],properties:{messageIds:{type:'array',maxItems:50,items:{type:'string',format:'uuid'}}}}}}},responses:{200:reply('Read receipts saved'),...errors,422:reply('Invalid or oversized receipt request',false)}}},
+  [`${root}/workspaces/{id}/conversations/{applicationId}/messages/{messageId}/attachments/{attachmentId}`]:{get:{tags:['Messaging'],summary:'Download a private conversation attachment',security:[{bearerAuth:[]}],parameters:[id('id'),id('applicationId'),id('messageId'),id('attachmentId')],responses:{200:{description:'Sanitized private attachment',content:{'application/pdf':{schema:{type:'string',format:'binary'}},'image/webp':{schema:{type:'string',format:'binary'}}}},401:reply('Authentication required',false),403:reply('Participant access denied',false),404:reply('Attachment not found',false)}}}
+ };
+}
+export const campaignConversationPaths={...routes('/brand','Brand'),...routes('/creator','Creator')};

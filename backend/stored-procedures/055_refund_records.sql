@@ -1,0 +1,61 @@
+DELIMITER $$
+CREATE TABLE IF NOT EXISTS campaign_refunds (
+ id CHAR(36) PRIMARY KEY,funding_id CHAR(36) NOT NULL UNIQUE,amount_minor BIGINT UNSIGNED NOT NULL,
+ provider_refund_id VARCHAR(80) NULL UNIQUE,status VARCHAR(24) NOT NULL DEFAULT 'CREATING',reason VARCHAR(500) NOT NULL,
+ requested_by CHAR(36) NOT NULL,created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+ FOREIGN KEY(funding_id) REFERENCES campaign_funding(id),FOREIGN KEY(requested_by) REFERENCES users(id),
+ CHECK(amount_minor BETWEEN 100 AND 99999999999),CHECK(status IN ('CREATING','SETUP_REVIEW','PENDING','PROCESSED','FAILED'))
+) ENGINE=InnoDB$$
+CREATE TABLE IF NOT EXISTS refund_history (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,refund_id CHAR(36) NOT NULL,status VARCHAR(24) NOT NULL,created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+ FOREIGN KEY(refund_id) REFERENCES campaign_refunds(id)
+) ENGINE=InnoDB$$
+CREATE TABLE IF NOT EXISTS payment_review_cases (
+ id CHAR(36) PRIMARY KEY,funding_id CHAR(36) NOT NULL,case_key VARCHAR(100) NOT NULL UNIQUE,kind VARCHAR(24) NOT NULL,
+ amount_minor BIGINT UNSIGNED NOT NULL,provider_refund_id VARCHAR(80) NULL,provider_status VARCHAR(24) NULL,
+ reason VARCHAR(500) NOT NULL,status VARCHAR(8) NOT NULL DEFAULT 'OPEN',revision INT NOT NULL DEFAULT 1,
+ created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+ FOREIGN KEY(funding_id) REFERENCES campaign_funding(id),CHECK(kind IN ('POLICY_REQUEST','EXTERNAL_REFUND')),CHECK(status IN ('OPEN','CLOSED')),CHECK(amount_minor>0)
+) ENGINE=InnoDB$$
+CREATE TABLE IF NOT EXISTS payment_review_notes (
+ id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,case_id CHAR(36) NOT NULL,actor_user_id CHAR(36) NOT NULL,action VARCHAR(16) NOT NULL,reason VARCHAR(500) NOT NULL,created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+ FOREIGN KEY(case_id) REFERENCES payment_review_cases(id),FOREIGN KEY(actor_user_id) REFERENCES users(id)
+) ENGINE=InnoDB$$
+DROP PROCEDURE IF EXISTS sp_upgrade_refund_event$$
+CREATE PROCEDURE sp_upgrade_refund_event()
+BEGIN
+ IF EXISTS(SELECT 1 FROM information_schema.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA=DATABASE() AND TABLE_NAME='wallet_journals' AND CONSTRAINT_NAME='chk_wallet_event') THEN
+ ALTER TABLE wallet_journals DROP CHECK chk_wallet_event,ADD CONSTRAINT chk_wallet_event_refund CHECK(event_type IN ('FUNDING_CAPTURE','CREATOR_RELEASE','REFUND_PROCESSED') AND currency='INR' AND mode='TEST');
+ END IF;
+END$$
+CALL sp_upgrade_refund_event()$$
+DROP PROCEDURE sp_upgrade_refund_event$$
+DROP TRIGGER IF EXISTS refunds_update_guard$$
+CREATE TRIGGER refunds_update_guard BEFORE UPDATE ON campaign_refunds FOR EACH ROW
+BEGIN
+ IF OLD.status='PROCESSED' OR NEW.id<>OLD.id OR NEW.funding_id<>OLD.funding_id OR NEW.amount_minor<>OLD.amount_minor OR NEW.reason<>OLD.reason OR NEW.requested_by<>OLD.requested_by OR (OLD.provider_refund_id IS NOT NULL AND NOT(BINARY NEW.provider_refund_id<=>BINARY OLD.provider_refund_id)) THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='WALLET_IMMUTABLE';END IF;
+END$$
+DROP TRIGGER IF EXISTS refunds_no_delete$$
+CREATE TRIGGER refunds_no_delete BEFORE DELETE ON campaign_refunds FOR EACH ROW
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='WALLET_IMMUTABLE'$$
+DROP TRIGGER IF EXISTS refund_history_no_update$$
+CREATE TRIGGER refund_history_no_update BEFORE UPDATE ON refund_history FOR EACH ROW
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='WALLET_IMMUTABLE'$$
+DROP TRIGGER IF EXISTS refund_history_no_delete$$
+CREATE TRIGGER refund_history_no_delete BEFORE DELETE ON refund_history FOR EACH ROW
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='WALLET_IMMUTABLE'$$
+DROP TRIGGER IF EXISTS review_cases_update_guard$$
+CREATE TRIGGER review_cases_update_guard BEFORE UPDATE ON payment_review_cases FOR EACH ROW
+BEGIN
+ IF NEW.id<>OLD.id OR NEW.funding_id<>OLD.funding_id OR NEW.kind<>OLD.kind OR NEW.case_key<>OLD.case_key OR NEW.amount_minor<>OLD.amount_minor OR NOT(BINARY NEW.provider_refund_id<=>BINARY OLD.provider_refund_id) OR NEW.reason<>OLD.reason OR (OLD.kind='EXTERNAL_REFUND' AND NEW.status='CLOSED') THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='REFUND_REVIEW_REQUIRED';END IF;
+END$$
+DROP TRIGGER IF EXISTS review_cases_no_delete$$
+CREATE TRIGGER review_cases_no_delete BEFORE DELETE ON payment_review_cases FOR EACH ROW
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='WALLET_IMMUTABLE'$$
+DROP TRIGGER IF EXISTS review_notes_no_update$$
+CREATE TRIGGER review_notes_no_update BEFORE UPDATE ON payment_review_notes FOR EACH ROW
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='WALLET_IMMUTABLE'$$
+DROP TRIGGER IF EXISTS review_notes_no_delete$$
+CREATE TRIGGER review_notes_no_delete BEFORE DELETE ON payment_review_notes FOR EACH ROW
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='WALLET_IMMUTABLE'$$
+DELIMITER ;

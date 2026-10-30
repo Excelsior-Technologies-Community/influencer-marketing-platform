@@ -1,0 +1,104 @@
+CREATE TABLE IF NOT EXISTS roles (
+  id TINYINT UNSIGNED PRIMARY KEY,
+  code VARCHAR(32) NOT NULL UNIQUE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS users (
+  id CHAR(36) PRIMARY KEY,
+  role_id TINYINT UNSIGNED NOT NULL,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(254) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  phone VARCHAR(32),
+  status ENUM('ACTIVE','INACTIVE','SUSPENDED','DELETED') NOT NULL DEFAULT 'ACTIVE',
+  is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES roles(id),
+  INDEX idx_users_role_status(role_id, status)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS brands (
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36) NOT NULL UNIQUE,
+  company_name VARCHAR(160) NOT NULL,
+  website VARCHAR(2048),
+  industry VARCHAR(120),
+  description TEXT,
+  created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  CONSTRAINT fk_brands_user FOREIGN KEY(user_id) REFERENCES users(id)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS creators (
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36) NOT NULL UNIQUE,
+  bio TEXT,
+  location VARCHAR(160),
+  verification_status ENUM('PENDING','UNDER_REVIEW','VERIFIED','REJECTED') NOT NULL DEFAULT 'PENDING',
+  created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  CONSTRAINT fk_creators_user FOREIGN KEY(user_id) REFERENCES users(id)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS refresh_sessions (
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36) NOT NULL,
+  token_hash CHAR(64) NOT NULL UNIQUE,
+  family_id CHAR(36) NOT NULL,
+  expires_at DATETIME(6) NOT NULL,
+  revoked_at DATETIME(6),
+  created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT fk_sessions_user FOREIGN KEY(user_id) REFERENCES users(id),
+  INDEX idx_sessions_family(family_id),
+  INDEX idx_sessions_expiry(expires_at)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS password_reset_tokens (
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36) NOT NULL,
+  token_hash CHAR(64) NOT NULL UNIQUE,
+  expires_at DATETIME(6) NOT NULL,
+  used_at DATETIME(6),
+  CONSTRAINT fk_reset_user FOREIGN KEY(user_id) REFERENCES users(id)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS categories (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  parent_id INT UNSIGNED,
+  name VARCHAR(120) NOT NULL UNIQUE,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  CONSTRAINT fk_category_parent FOREIGN KEY(parent_id) REFERENCES categories(id)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS platforms (
+  id TINYINT UNSIGNED PRIMARY KEY,
+  code VARCHAR(32) NOT NULL UNIQUE,
+  name VARCHAR(60) NOT NULL,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS content_types (
+  id TINYINT UNSIGNED PRIMARY KEY,
+  code VARCHAR(32) NOT NULL UNIQUE,
+  name VARCHAR(60) NOT NULL,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS audit_logs (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  actor_user_id CHAR(36),
+  action VARCHAR(100) NOT NULL,
+  entity_type VARCHAR(60) NOT NULL,
+  entity_id VARCHAR(36),
+  request_id CHAR(36),
+  metadata JSON,
+  created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT fk_audit_actor FOREIGN KEY(actor_user_id) REFERENCES users(id),
+  INDEX idx_audit_entity(entity_type, entity_id),
+  INDEX idx_audit_created(created_at)
+) ENGINE=InnoDB;
+
+INSERT IGNORE INTO roles(id,code) VALUES (1,'SUPER_ADMIN'),(2,'BRAND_ADMIN'),(3,'CREATOR');
+INSERT IGNORE INTO platforms(id,code,name) VALUES (1,'INSTAGRAM','Instagram'),(2,'FACEBOOK','Facebook'),(3,'YOUTUBE','YouTube');
+INSERT IGNORE INTO content_types(id,code,name) VALUES (1,'REEL','Reel'),(2,'POST','Post'),(3,'STORY','Story'),(4,'LIVE','Live'),(5,'VIDEO','Video'),(6,'SHORT','Short');

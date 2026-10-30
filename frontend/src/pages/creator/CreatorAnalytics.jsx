@@ -1,0 +1,21 @@
+import { useEffect,useState } from 'react';
+import { api } from '../../services/api.js';
+import './CreatorAnalytics.css';
+
+const errorText=error=>error.response?.data?.message||'Could not load your analytics. Please try again.';
+const count=value=>Number(value||0).toLocaleString();
+function duration(value){const seconds=Math.max(0,Math.round(Number(value||0)/1000));if(seconds<60)return `${seconds}s`;const minutes=Math.floor(seconds/60),remaining=seconds%60;return remaining?`${minutes}m ${remaining}s`:`${minutes}m`;}
+function Stat({label,value,note}){return <article><span>{label}</span><strong>{value}</strong>{note&&<small>{note}</small>}</article>;}
+
+export default function CreatorAnalytics(){
+  const [data,setData]=useState(null),[loading,setLoading]=useState(true),[error,setError]=useState(''),[reload,setReload]=useState(0);
+  useEffect(()=>{const controller=new AbortController();setLoading(true);setError('');api.get('/creator/analytics',{signal:controller.signal}).then(response=>setData(response.data.data)).catch(failure=>{if(!controller.signal.aborted)setError(errorText(failure));}).finally(()=>{if(!controller.signal.aborted)setLoading(false);});return()=>controller.abort();},[reload]);
+  return <div className="creator-analytics"><div className="eyebrow">CREATOR INSIGHTS</div><div className="admin-section-heading"><div><h1>Your analytics.</h1><p>Social account metrics and your signed-in workspace activity.</p></div><button onClick={()=>setReload(value=>value+1)} disabled={loading}>Refresh analytics</button></div>
+    {loading?<p role="status">Loading your analytics…</p>:error?<section className="admin-card"><p role="alert" className="form-error">{error}</p><button onClick={()=>setReload(value=>value+1)}>Retry</button></section>:data&&<>
+      <section className="admin-card"><h2>Your workspace activity</h2><p className="brand-helper">Page visits are counted as you move between screens while signed in. The current screen is recorded when you navigate away.</p><div className="admin-stats creator-analytics-stats"><Stat label="Total sessions" value={count(data.activity.totalSessions)}/><Stat label="Page visits" value={count(data.activity.totalPageViews)}/><Stat label="Average session" value={data.activity.totalSessions?duration(data.activity.averageSessionDurationMs):'No data yet'}/><Stat label="Most visited page" value={data.activity.mostVisitedPage||'No data yet'}/><Stat label="Most time spent" value={data.activity.highestTimeSpentPage||'No data yet'}/></div>
+        {!data.pages.length?<p>No tracked page activity yet. Visit another screen and come back to see session insights.</p>:<div className="admin-table-wrap"><table><thead><tr><th>Screen</th><th>Visits</th><th>Sessions</th><th>Total time</th><th>Average visit</th></tr></thead><tbody>{data.pages.map(page=><tr key={page.screen}><td>{page.screen}</td><td>{count(page.pageViews)}</td><td>{count(page.sessions)}</td><td>{duration(page.totalDurationMs)}</td><td>{duration(page.averageDurationMs)}</td></tr>)}</tbody></table></div>}
+      </section>
+      <section className="admin-card"><h2>Social account metrics</h2><p className="brand-helper">Numbers below are self-reported from your saved social accounts. They are not provider-verified and do not represent campaign results.</p>{!data.socialAccounts.length?<p>No social accounts saved yet. Add accounts to see the metrics you reported.</p>:<div className="admin-table-wrap"><table><thead><tr><th>Platform</th><th>Followers / subscribers</th><th>Average views</th><th>Engagement rate</th><th>Reported</th></tr></thead><tbody>{data.socialAccounts.map((account,index)=><tr key={`${account.platformName}-${index}`}><td>{account.platformName}</td><td>{account.followersCount===null?'Not provided':count(account.followersCount)}</td><td>{account.averageViews===null?'Not provided':count(account.averageViews)}</td><td>{account.engagementRate===null?'Not provided':`${account.engagementRate}%`}</td><td>{account.metricsReportedAt?new Date(account.metricsReportedAt).toLocaleDateString():'Not reported'}</td></tr>)}</tbody></table></div>}<p className="brand-helper creator-analytics-note">Campaign post reach and profile views are not tracked yet. They will remain unavailable until the platform receives a real source for those measurements.</p></section>
+    </>}
+  </div>;
+}

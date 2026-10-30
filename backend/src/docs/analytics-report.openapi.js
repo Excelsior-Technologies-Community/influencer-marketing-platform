@@ -1,0 +1,13 @@
+const auth=[{bearerAuth:[]}];
+const reply={description:'Role-scoped paginated report rows; dates filter ledger posting time, status filters the campaign lifecycle state and campaignId filters one campaign.'};
+export const analyticsReportPaths={
+ '/admin/analytics/reports':{get:{tags:['Analytics'],summary:'Filter and export platform financial activity',security:auth,description:'Active SUPER_ADMIN only. Includes posted Test Mode funding captures, per-Creator releases/commission and processed refunds. Optional from/to (inclusive, max 367 calendar days), campaign status, campaign UUID and campaign/Creator search. JSON page size is at most 50. CSV export is capped at 5,000 rows and rejects larger result sets; narrow the filters. CSV text is protected against spreadsheet-formula injection. No payment secrets or personal session analytics are included.',parameters:[...params()],responses:{200:reply,401:{description:'Unauthenticated'},403:{description:'Wrong role'},422:{description:'Invalid filters or export exceeds row limit'}}}},
+ '/brand/reports':{get:{tags:['Analytics'],summary:'Filter and export owned campaign financial activity',security:auth,description:'Active BRAND_ADMIN only. Database scope is derived from the authenticated Brand. Includes own posted Test Mode captures, Creator releases/commission and processed refunds. Filters and export limits match the Super Admin report.',parameters:[...params()],responses:{200:reply,401:{description:'Unauthenticated'},403:{description:'Wrong role'},422:{description:'Invalid filters or export exceeds row limit'}}}},
+ '/creator/reports':{get:{tags:['Analytics'],summary:'Filter and export own Creator earnings',security:auth,description:'Active CREATOR only. Contains only this Creator’s posted Test Mode release rows. Creator identity and campaign owner are derived from the session/database, not accepted from the request.',parameters:[...params()],responses:{200:reply,401:{description:'Unauthenticated'},403:{description:'Wrong role'},422:{description:'Invalid filters or export exceeds row limit'}}}}
+};
+function params(){return [
+ {name:'from',in:'query',schema:{type:'string',format:'date'}},{name:'to',in:'query',schema:{type:'string',format:'date'}},
+ {name:'status',in:'query',schema:{type:'string'}},{name:'campaignId',in:'query',schema:{type:'string',format:'uuid'}},
+ {name:'q',in:'query',schema:{type:'string',maxLength:100}},{name:'page',in:'query',schema:{type:'integer',minimum:1,default:1}},
+ {name:'pageSize',in:'query',schema:{type:'integer',minimum:1,maximum:50,default:10}},{name:'format',in:'query',schema:{type:'string',enum:['json','csv'],default:'json'}}
+];}

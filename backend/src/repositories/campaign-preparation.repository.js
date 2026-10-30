@@ -1,0 +1,2 @@
+import {callProcedure,callProcedureSets} from './procedure.repository.js';
+export const preparationRepository={get:parameters=>callProcedureSets('sp_get_campaign_preparation',parameters),schedule:parameters=>callProcedure('sp_save_campaign_schedule',parameters),file:parameters=>callProcedure('sp_get_campaign_file',parameters),saveFile:parameters=>callProcedure('sp_save_campaign_file',parameters),removeFile:parameters=>callProcedure('sp_delete_campaign_file',parameters)};

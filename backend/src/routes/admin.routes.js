@@ -1,0 +1,32 @@
+import {lifecycleController as lifecycle} from '../controllers/campaign-lifecycle.controller.js';
+import {refundReviewController} from '../controllers/campaign-refund.controller.js';
+import {reviewController as review} from '../controllers/campaign-review.controller.js';
+import { Router } from 'express';
+import { authenticate,requireRole } from '../middlewares/auth.middleware.js';
+import { protectMutation } from '../middlewares/origin.middleware.js';
+import { adminController as controller } from '../controllers/admin.controller.js';
+import { creatorAssetsController as assets } from '../controllers/creator-assets.controller.js';
+import { activityAnalyticsController as activity } from '../controllers/activity-analytics.controller.js';
+import {analyticsReportController as analyticsReport} from '../controllers/analytics-report.controller.js';
+export function adminRoutes(authService) {
+  const router=Router();
+  router.use(authenticate(authService),requireRole('SUPER_ADMIN'),protectMutation);
+  router.use((req,res,next)=>{res.setHeader('Cache-Control','no-store');next();});
+  router.get('/dashboard',controller.dashboard);
+  router.get('/analytics/user-screens',activity.admin);
+  router.get('/analytics/reports',analyticsReport.list);
+  router.get('/payment-reviews',refundReviewController.list);router.post('/payment-reviews/:id/notes',refundReviewController.note);
+  router.get('/audit-logs',controller.audit);
+  router.get('/catalogs/:kind',controller.catalogs);
+  router.post('/catalogs/:kind',controller.saveCatalog);
+  router.put('/catalogs/:kind/:id',controller.saveCatalog);
+  router.patch('/creators/:id/verification',controller.verification);
+  router.get('/creators/:id/verification-files',assets.adminList);
+  router.get('/creators/:id/verification-files/:fileId',assets.adminDownload);
+  router.get('/campaign-reviews',review.list);router.get('/campaign-reviews/:id',review.get);router.post('/campaign-reviews/:id/decision',review.transition);router.get('/campaign-reviews/:id/files/:fileId',review.download);
+  router.get('/campaign-management/:id',lifecycle.get);router.post('/campaign-management/:id/actions',lifecycle.change);router.post('/campaign-management/:id/refresh',lifecycle.refresh);
+  router.get('/:kind',controller.accounts);
+  router.get('/:kind/:id',controller.account);
+  router.patch('/:kind/:id/status',controller.status);
+  return router;
+}

@@ -1,0 +1,10 @@
+const parameters=[{name:'id',in:'path',required:true,schema:{type:'string',format:'uuid'}}];
+const common={tags:['Creator earnings release'],security:[{bearerAuth:[]}],parameters};
+const errors={401:{description:'Authentication required or inactive account'},403:{description:'Wrong role or mutation origin/header'},404:{description:'Missing or foreign campaign'},409:{description:'Stale revision, ineligible release or failed ledger checks'},422:{description:'Invalid or unknown input'}};
+const description='Active owning Brand only. INR Test Mode wallet credits; no bank transfer. Split the captured campaign principal equally among approved allocated Creators. Remaining paise go in allocated_at/application_id order. Commission is floor(gross share / 10) per Creator; net is gross minus commission. Gateway fees are not deducted. Release requires COMPLETED, every slot allocated, every required current-version content item approved, active Creators and shares of at least one paise. One immutable balanced release journal per funding, all Creator credits/commission/Brand debit/audit commit atomically. Repeated release requests return the recorded release without additional credits. Amounts are decimal paise strings.';
+export const releasePaths={
+ '/brand/campaigns/{id}/earnings-release':{
+  get:{...common,summary:'Preview Creator shares and 10% commission',description,responses:{200:{description:'data.release: campaignId, revision, status, commissionBps=1000, mode=TEST, currency=INR, journalId, releasedAt, released, canRelease. data.items: applicationId, creatorName, grossMinor, commissionMinor, netMinor. Once released, amounts come from immutable snapshots.'},...errors}},
+  post:{...common,summary:'Release earnings to Creator test wallets',description,requestBody:{required:true,content:{'application/json':{schema:{type:'object',additionalProperties:false,required:['revision'],properties:{revision:{type:'integer',minimum:0}}}}}},responses:{200:{description:'Recorded release and Creator breakdown, including idempotent retries.'},...errors}}
+ }
+};

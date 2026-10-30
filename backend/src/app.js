@@ -1,0 +1,50 @@
+import {createRazorpayGateway} from './services/razorpay.gateway.js';
+import {fundingController} from './controllers/campaign-funding.controller.js';
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import { randomUUID } from 'node:crypto';
+import { rateLimit } from 'express-rate-limit';
+import swaggerUi from 'swagger-ui-express';
+import { env } from './config/env.js';
+import { isAllowedOrigin } from './config/origins.js';
+import { checkDatabase } from './config/db.js';
+import { healthRoutes } from './routes/health.routes.js';
+import { errorHandler, notFound } from './middlewares/error.middleware.js';
+import { openapi } from './docs/openapi.js';
+import cookieParser from 'cookie-parser';
+import { authRoutes } from './routes/auth.routes.js';
+import { createAuthService } from './services/auth.service.js';
+import { adminRoutes } from './routes/admin.routes.js';
+import { brandRoutes } from './routes/brand.routes.js';
+import { creatorRoutes } from './routes/creator.routes.js';
+import { notificationRoutes } from './routes/notification.routes.js';
+import { analyticsRoutes } from './routes/analytics.routes.js';
+
+export function createApp({ databaseCheck = checkDatabase, logging = env.NODE_ENV !== 'test', authService = createAuthService(), authAttemptLimit, paymentGateway=createRazorpayGateway() } = {}) {
+  const app = express();
+  app.disable('x-powered-by');
+  if (env.TRUST_PROXY_HOPS > 0) app.set('trust proxy', env.TRUST_PROXY_HOPS);
+  app.use((req, res, next) => { req.id = randomUUID(); res.setHeader('X-Request-Id', req.id); next(); });
+  app.use(helmet());
+  app.use(cors({ origin: (origin, callback) => callback(null, !origin || isAllowedOrigin(origin)), credentials: true }));
+  if (logging) app.use(morgan(':method :status :response-time ms'));
+  app.use('/api', rateLimit({ windowMs: 60_000, limit: 120, standardHeaders: 'draft-8', legacyHeaders: false,
+    handler: (req, res) => res.status(429).json({ success: false, message: 'Too many requests', errors: [] }) }));
+  app.post('/api/v1/payments/razorpay/webhook',express.raw({type:'application/json',limit:'256kb'}),fundingController(paymentGateway).webhook);
+  app.use(express.json({ limit: '1mb' }));
+  app.use(cookieParser());
+  app.use('/api/v1/auth', (req, res, next) => { res.setHeader('Cache-Control', 'no-store'); next(); }, authRoutes(authService, { attemptLimit: authAttemptLimit }));
+  app.use('/api/v1/notifications',notificationRoutes(authService));
+  app.use('/api/v1/analytics',analyticsRoutes(authService));
+  app.use('/api/v1/admin',adminRoutes(authService));
+  app.use('/api/v1/brand',brandRoutes(authService,paymentGateway));
+  app.use('/api/v1/creator',creatorRoutes(authService));
+  app.use('/api/v1', healthRoutes(databaseCheck));
+  app.get('/api-docs/openapi.json', (req, res) => res.json(openapi));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapi));
+  app.use(notFound);
+  app.use(errorHandler);
+  return app;
+}

@@ -1,0 +1,5054 @@
+{
+  "info": {
+    "name": "Influencer Marketing API — Modules 01–11",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman requests for the implemented local role workflows. Import the collection, set base_url, then follow module guides for prerequisites and request sequence. Use only Test Mode payment credentials."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:4000"
+    },
+    {
+      "key": "email",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": ""
+    },
+    {
+      "key": "name",
+      "value": ""
+    },
+    {
+      "key": "role",
+      "value": "CREATOR"
+    },
+    {
+      "key": "company_name",
+      "value": ""
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "user_id",
+      "value": ""
+    },
+    {
+      "key": "reset_token",
+      "value": ""
+    },
+    {
+      "key": "new_password",
+      "value": ""
+    },
+    {
+      "key": "brand_id",
+      "value": ""
+    },
+    {
+      "key": "creator_id",
+      "value": ""
+    },
+    {
+      "key": "catalog_kind",
+      "value": "categories"
+    },
+    {
+      "key": "catalog_id",
+      "value": ""
+    },
+    {
+      "key": "parent_category_id",
+      "value": ""
+    },
+    {
+      "key": "catalog_name",
+      "value": ""
+    },
+    {
+      "key": "catalog_code",
+      "value": ""
+    },
+    {
+      "key": "status",
+      "value": "SUSPENDED"
+    },
+    {
+      "key": "verification_status",
+      "value": "UNDER_REVIEW"
+    },
+    {
+      "key": "reason",
+      "value": ""
+    },
+    {
+      "key": "search",
+      "value": ""
+    },
+    {
+      "key": "profile_revision",
+      "value": "0"
+    },
+    {
+      "key": "logo_revision",
+      "value": "0"
+    },
+    {
+      "key": "profile_json",
+      "value": ""
+    },
+    {
+      "key": "creator_profile_json",
+      "value": ""
+    },
+    {
+      "key": "social_account_id",
+      "value": ""
+    },
+    {
+      "key": "social_platform_id",
+      "value": ""
+    },
+    {
+      "key": "social_revision",
+      "value": "1"
+    },
+    {
+      "key": "creator_asset_id",
+      "value": ""
+    },
+    {
+      "key": "creator_asset_revision",
+      "value": "1"
+    },
+    {
+      "key": "evidence_creator_id",
+      "value": ""
+    },
+    {
+      "key": "evidence_file_id",
+      "value": ""
+    },
+    {
+      "key": "campaign_id",
+      "value": ""
+    },
+    {
+      "key": "campaign_json",
+      "value": ""
+    },
+    {
+      "key": "campaign_schedule_revision",
+      "value": "0"
+    },
+    {
+      "key": "campaign_file_id",
+      "value": ""
+    },
+    {
+      "key": "campaign_file_revision",
+      "value": "1"
+    },
+    {
+      "key": "published_at",
+      "value": ""
+    },
+    {
+      "key": "submission_id",
+      "value": ""
+    },
+    {
+      "key": "content_version",
+      "value": "1"
+    },
+    {
+      "key": "campaign_revision",
+      "value": "0"
+    },
+    {
+      "key": "razorpay_order_id",
+      "value": ""
+    },
+    {
+      "key": "razorpay_payment_id",
+      "value": ""
+    },
+    {
+      "key": "razorpay_signature",
+      "value": ""
+    },
+    {
+      "key": "payment_review_id",
+      "value": ""
+    },
+    {
+      "value": "",
+      "key": "reviewee_user_id",
+      "type": "string"
+    },
+    {
+      "key": "application_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "message_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notification_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "report_from",
+      "value": ""
+    },
+    {
+      "key": "report_to",
+      "value": ""
+    },
+    {
+      "key": "campaign_status",
+      "value": ""
+    },
+    {
+      "key": "report_search",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "System",
+      "item": [
+        {
+          "name": "Liveness",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/v1/health"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"Expected status\", () => pm.expect(pm.response.code).to.be.oneOf([200]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Database readiness",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/v1/health/ready"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"Expected status\", () => pm.expect(pm.response.code).to.be.oneOf([200, 503]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Unknown route",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/v1/not-implemented"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Unknown endpoints are rejected\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Authentication - run role checks with corresponding account",
+      "item": [
+        {
+          "name": "Register creator",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"role\": \"CREATOR\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register brand",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"role\": \"BRAND_ADMIN\",\n  \"companyName\": \"{{company_name}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });",
+                  "if (body.data?.accessToken) pm.collectionVariables.set(\"access_token\", body.data.accessToken);",
+                  "if (body.data?.user?.id) pm.collectionVariables.set(\"user_id\", body.data.user.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Current account",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/me"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Own account",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/users/{{user_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Creator access",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/access/creator"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Brand access",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/access/brand_admin"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Super Admin access",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/access/super_admin"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/refresh-token"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });",
+                  "if (body.data?.accessToken) pm.collectionVariables.set(\"access_token\", body.data.accessToken);",
+                  "if (body.data?.user?.id) pm.collectionVariables.set(\"user_id\", body.data.user.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Forgot password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/forgot-password",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reset password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/reset-password",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{reset_token}}\",\n  \"password\": \"{{new_password}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/logout"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reject public admin registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"role\": \"SUPER_ADMIN\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(422));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reject invalid login input",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(422));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => { pm.expect(body).to.have.property(\"success\"); pm.expect(body).to.have.property(\"message\"); });",
+                  "pm.test(\"No credential leakage\", () => { pm.expect(JSON.stringify(body)).not.to.include(\"password_hash\"); pm.expect(body.data || {}).not.to.have.property(\"refreshToken\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Super Admin - requires admin login",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/dashboard"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search brands",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/brands?page=1&pageSize=20&q={{search}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "pm.test(\"Pagination metadata\", () => { pm.expect(body.meta).to.have.property(\"total\"); pm.expect(body.meta).to.have.property(\"pageSize\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Brand detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/brands/{{brand_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Brand status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/brands/{{brand_id}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"{{status}}\",\n  \"reason\": \"{{reason}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search creators",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/creators?page=1&pageSize=20&q={{search}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "pm.test(\"Pagination metadata\", () => { pm.expect(body.meta).to.have.property(\"total\"); pm.expect(body.meta).to.have.property(\"pageSize\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Creator detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/creators/{{creator_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Creator status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/creators/{{creator_id}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"{{status}}\",\n  \"reason\": \"{{reason}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Creator verification",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/creators/{{creator_id}}/verification",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"{{verification_status}}\",\n  \"reason\": \"{{reason}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List catalogs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/catalogs/{{catalog_kind}}?page=1&pageSize=20"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "pm.test(\"Pagination metadata\", () => { pm.expect(body.meta).to.have.property(\"total\"); pm.expect(body.meta).to.have.property(\"pageSize\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/catalogs/categories",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{catalog_name}}\",\n  \"parentId\": null,\n  \"isActive\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "if (body.data?.item?.id) pm.collectionVariables.set(\"catalog_id\", body.data.item.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create platform",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/catalogs/platforms",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{catalog_name}}\",\n  \"code\": \"{{catalog_code}}\",\n  \"isActive\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "if (body.data?.item?.id) pm.collectionVariables.set(\"catalog_id\", body.data.item.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create content type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/catalogs/content-types",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{catalog_name}}\",\n  \"code\": \"{{catalog_code}}\",\n  \"isActive\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "if (body.data?.item?.id) pm.collectionVariables.set(\"catalog_id\", body.data.item.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/catalogs/categories/{{catalog_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{catalog_name}}\",\n  \"parentId\": null,\n  \"isActive\": false,\n  \"reason\": \"{{reason}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update platform",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/catalogs/platforms/{{catalog_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{catalog_name}}\",\n  \"code\": \"{{catalog_code}}\",\n  \"isActive\": false,\n  \"reason\": \"{{reason}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update content type",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/catalogs/content-types/{{catalog_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{catalog_name}}\",\n  \"code\": \"{{catalog_code}}\",\n  \"isActive\": false,\n  \"reason\": \"{{reason}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Audit history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/audit-logs?page=1&pageSize=20"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "pm.test(\"Pagination metadata\", () => { pm.expect(body.meta).to.have.property(\"total\"); pm.expect(body.meta).to.have.property(\"pageSize\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalid catalog type",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/catalogs/invalid"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(422));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalid pagination",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/brands?pageSize=101"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(422));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Standard response\", () => pm.expect(body).to.have.property(\"success\"));",
+                  "pm.test(\"No credentials exposed\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Brand workspace - requires Brand Admin login",
+      "item": [
+        {
+          "name": "Brand overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/dashboard"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"No credential leakage\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "const profile = body.data?.profile;",
+                  "if (profile) { pm.collectionVariables.set(\"profile_revision\", profile.revision); pm.collectionVariables.set(\"logo_revision\", profile.logoRevision); const { companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision }=profile; pm.collectionVariables.set(\"profile_json\", JSON.stringify({companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision},null,2)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Own profile - captures snapshot and revisions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/profile"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"No credential leakage\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "const profile = body.data?.profile;",
+                  "if (profile) { pm.collectionVariables.set(\"profile_revision\", profile.revision); pm.collectionVariables.set(\"logo_revision\", profile.logoRevision); const { companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision }=profile; pm.collectionVariables.set(\"profile_json\", JSON.stringify({companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision},null,2)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Save editable snapshot - edit profile_json first",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/profile",
+            "body": {
+              "mode": "raw",
+              "raw": "{{profile_json}}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"No credential leakage\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "const profile = body.data?.profile;",
+                  "if (profile) { pm.collectionVariables.set(\"profile_revision\", profile.revision); pm.collectionVariables.set(\"logo_revision\", profile.logoRevision); const { companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision }=profile; pm.collectionVariables.set(\"profile_json\", JSON.stringify({companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision},null,2)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Upload logo - select file",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/profile/logo",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "revision",
+                  "value": "{{logo_revision}}",
+                  "type": "text"
+                },
+                {
+                  "key": "logo",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"No credential leakage\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "const profile = body.data?.profile;",
+                  "if (profile) { pm.collectionVariables.set(\"profile_revision\", profile.revision); pm.collectionVariables.set(\"logo_revision\", profile.logoRevision); const { companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision }=profile; pm.collectionVariables.set(\"profile_json\", JSON.stringify({companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision},null,2)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Download private logo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/profile/logo"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Private image\", () => { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"image/webp\"); pm.expect(pm.response.headers.get(\"Cache-Control\")).to.equal(\"no-store\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Remove company logo",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/profile/logo",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{logo_revision}}\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"No credential leakage\", () => pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "const profile = body.data?.profile;",
+                  "if (profile) { pm.collectionVariables.set(\"profile_revision\", profile.revision); pm.collectionVariables.set(\"logo_revision\", profile.logoRevision); const { companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision }=profile; pm.collectionVariables.set(\"profile_json\", JSON.stringify({companyName,website,industry,description,contactName,contactEmail,phone,location,socialLinks,billing,revision},null,2)); }"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Creator profile — Module 05 Task 1",
+      "item": [
+        {
+          "name": "Get own Creator profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/profile"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body=pm.response.json();",
+                  "pm.test(\"No credential leakage\",()=>pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "const profile=body.data?.profile; if(profile){ const {bio,location,languages,skills,categoryIds,revision}=profile; pm.collectionVariables.set(\"creator_profile_json\",JSON.stringify({bio,location,languages,skills,categoryIds,revision},null,2)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Replace editable Creator profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/profile",
+            "description": "Full replacement. First GET the latest profile; edit creator_profile_json with the current revision. Maximum 10 categories, 10 languages, 20 skills. Name/email/verification cannot be changed. Stale revisions return 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{{creator_profile_json}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body=pm.response.json();",
+                  "pm.test(\"No credential leakage\",()=>pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));",
+                  "const profile=body.data?.profile; if(profile){ const {bio,location,languages,skills,categoryIds,revision}=profile; pm.collectionVariables.set(\"creator_profile_json\",JSON.stringify({bio,location,languages,skills,categoryIds,revision},null,2)); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search available and own selected categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/profile/categories?q=&page=1&pageSize=50"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected status\", () => pm.response.to.have.status(200));",
+                  "const body=pm.response.json();",
+                  "pm.test(\"No credential leakage\",()=>pm.expect(JSON.stringify(body)).not.to.match(/password_hash|token_hash|auth_version/));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Creator social accounts — Module 05 Task 2",
+      "item": [
+        {
+          "name": "List own accounts and platforms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/social-accounts"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"Manual, unverified provenance\",()=>{ for(const item of data.items||[]) {pm.expect(item.metricsSource).to.equal(\"MANUAL\");pm.expect(item.isVerified).to.equal(false);} });",
+                  "const item=data.items?.[0]; if(item){pm.collectionVariables.set(\"social_account_id\",item.id);pm.collectionVariables.set(\"social_revision\",item.revision);} const platform=data.platforms?.find(item=>item.code===\"INSTAGRAM\"&&item.isAvailable);if(platform)pm.collectionVariables.set(\"social_platform_id\",platform.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Instagram profile with manual metrics",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/social-accounts",
+            "description": "Creator only. GET first for platforms and current revision. Metrics are self-reported. Omitted metrics clear to null. One account per platform; stale edits/removals return 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"platformId\": {{social_platform_id}},\n \"username\": \"creator.demo\",\n \"profileUrl\": \"https://www.instagram.com/creator.demo/\",\n \"followersCount\": 12500,\n \"averageViews\": 4200,\n \"engagementRate\": 4.25\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"Manual, unverified provenance\",()=>{ for(const item of data.items||[]) {pm.expect(item.metricsSource).to.equal(\"MANUAL\");pm.expect(item.isVerified).to.equal(false);} });",
+                  "const item=data.items?.[0]; if(item){pm.collectionVariables.set(\"social_account_id\",item.id);pm.collectionVariables.set(\"social_revision\",item.revision);} const platform=data.platforms?.find(item=>item.code===\"INSTAGRAM\"&&item.isAvailable);if(platform)pm.collectionVariables.set(\"social_platform_id\",platform.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update account details and metrics",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/social-accounts/{{social_account_id}}",
+            "description": "Creator only. GET first for platforms and current revision. Metrics are self-reported. Omitted metrics clear to null. One account per platform; stale edits/removals return 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"username\": \"creator.demo\",\n \"profileUrl\": \"https://www.instagram.com/creator.demo/\",\n \"followersCount\": 13000,\n \"averageViews\": 4500,\n \"engagementRate\": 4.5,\n \"revision\": {{social_revision}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"Manual, unverified provenance\",()=>{ for(const item of data.items||[]) {pm.expect(item.metricsSource).to.equal(\"MANUAL\");pm.expect(item.isVerified).to.equal(false);} });",
+                  "const item=data.items?.[0]; if(item){pm.collectionVariables.set(\"social_account_id\",item.id);pm.collectionVariables.set(\"social_revision\",item.revision);} const platform=data.platforms?.find(item=>item.code===\"INSTAGRAM\"&&item.isAvailable);if(platform)pm.collectionVariables.set(\"social_platform_id\",platform.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Remove saved account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/social-accounts/{{social_account_id}}",
+            "description": "Creator only. GET first for platforms and current revision. Metrics are self-reported. Omitted metrics clear to null. One account per platform; stale edits/removals return 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"revision\": {{social_revision}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"Manual, unverified provenance\",()=>{ for(const item of data.items||[]) {pm.expect(item.metricsSource).to.equal(\"MANUAL\");pm.expect(item.isVerified).to.equal(false);} });",
+                  "const item=data.items?.[0]; if(item){pm.collectionVariables.set(\"social_account_id\",item.id);pm.collectionVariables.set(\"social_revision\",item.revision);} const platform=data.platforms?.find(item=>item.code===\"INSTAGRAM\"&&item.isAvailable);if(platform)pm.collectionVariables.set(\"social_platform_id\",platform.id);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Creator files — Module 05 Task 3",
+      "item": [
+        {
+          "name": "List own files",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/media",
+            "description": "Private Creator upload/evidence flow. Select a local file before multipart requests. PHOTO: 2 MiB, one; PORTFOLIO: 5 MiB, ten; VERIFICATION: 5 MiB, five. PNG/JPEG/WebP or restricted 1–20 page PDF (not PHOTO). Replace/delete need current file revision; upload does not verify identity. Admin reads require SUPER_ADMIN."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"No bytes or original filenames in metadata\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));",
+                  "const file=data.items?.[0];if(file){pm.collectionVariables.set(\"creator_asset_id\",file.id);pm.collectionVariables.set(\"creator_asset_revision\",file.revision);}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Upload private file",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/media",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "kind",
+                  "value": "PORTFOLIO",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Sample portfolio image",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Private Creator upload/evidence flow. Select a local file before multipart requests. PHOTO: 2 MiB, one; PORTFOLIO: 5 MiB, ten; VERIFICATION: 5 MiB, five. PNG/JPEG/WebP or restricted 1–20 page PDF (not PHOTO). Replace/delete need current file revision; upload does not verify identity. Admin reads require SUPER_ADMIN."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"No bytes or original filenames in metadata\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));",
+                  "const file=data.items?.[0];if(file){pm.collectionVariables.set(\"creator_asset_id\",file.id);pm.collectionVariables.set(\"creator_asset_revision\",file.revision);}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Download own file",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/media/{{creator_asset_id}}",
+            "description": "Private Creator upload/evidence flow. Select a local file before multipart requests. PHOTO: 2 MiB, one; PORTFOLIO: 5 MiB, ten; VERIFICATION: 5 MiB, five. PNG/JPEG/WebP or restricted 1–20 page PDF (not PHOTO). Replace/delete need current file revision; upload does not verify identity. Admin reads require SUPER_ADMIN."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Private file\",()=>{pm.response.to.have.status(200);pm.expect(pm.response.headers.get(\"Cache-Control\")).to.equal(\"no-store\");pm.expect(pm.response.headers.get(\"X-Content-Type-Options\")).to.equal(\"nosniff\");});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Replace file",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/media/{{creator_asset_id}}",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "revision",
+                  "value": "{{creator_asset_revision}}",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Sample portfolio image",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Private Creator upload/evidence flow. Select a local file before multipart requests. PHOTO: 2 MiB, one; PORTFOLIO: 5 MiB, ten; VERIFICATION: 5 MiB, five. PNG/JPEG/WebP or restricted 1–20 page PDF (not PHOTO). Replace/delete need current file revision; upload does not verify identity. Admin reads require SUPER_ADMIN."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"No bytes or original filenames in metadata\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));",
+                  "const file=data.items?.[0];if(file){pm.collectionVariables.set(\"creator_asset_id\",file.id);pm.collectionVariables.set(\"creator_asset_revision\",file.revision);}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Remove file",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/media/{{creator_asset_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"revision\": {{creator_asset_revision}}\n}"
+            },
+            "description": "Private Creator upload/evidence flow. Select a local file before multipart requests. PHOTO: 2 MiB, one; PORTFOLIO: 5 MiB, ten; VERIFICATION: 5 MiB, five. PNG/JPEG/WebP or restricted 1–20 page PDF (not PHOTO). Replace/delete need current file revision; upload does not verify identity. Admin reads require SUPER_ADMIN."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"No bytes or original filenames in metadata\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));",
+                  "const file=data.items?.[0];if(file){pm.collectionVariables.set(\"creator_asset_id\",file.id);pm.collectionVariables.set(\"creator_asset_revision\",file.revision);}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin list verification evidence",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/creators/{{evidence_creator_id}}/verification-files",
+            "description": "Private Creator upload/evidence flow. Select a local file before multipart requests. PHOTO: 2 MiB, one; PORTFOLIO: 5 MiB, ten; VERIFICATION: 5 MiB, five. PNG/JPEG/WebP or restricted 1–20 page PDF (not PHOTO). Replace/delete need current file revision; upload does not verify identity. Admin reads require SUPER_ADMIN."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Expected success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"No bytes or original filenames in metadata\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));",
+                  "const file=data.items?.[0];if(file){pm.collectionVariables.set(\"creator_asset_id\",file.id);pm.collectionVariables.set(\"creator_asset_revision\",file.revision);}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin download verification evidence",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/creators/{{evidence_creator_id}}/verification-files/{{evidence_file_id}}",
+            "description": "Private Creator upload/evidence flow. Select a local file before multipart requests. PHOTO: 2 MiB, one; PORTFOLIO: 5 MiB, ten; VERIFICATION: 5 MiB, five. PNG/JPEG/WebP or restricted 1–20 page PDF (not PHOTO). Replace/delete need current file revision; upload does not verify identity. Admin reads require SUPER_ADMIN."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Private file\",()=>{pm.response.to.have.status(200);pm.expect(pm.response.headers.get(\"Cache-Control\")).to.equal(\"no-store\");pm.expect(pm.response.headers.get(\"X-Content-Type-Options\")).to.equal(\"nosniff\");});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Creator dashboard — Module 05 Task 4",
+      "item": [
+        {
+          "name": "Read own dashboard and readiness",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/dashboard",
+            "description": "Active CREATOR only; no owner/query parameters. Real data snapshot. Completeness (eight essentials) is separate from verification. Audience total is self-reported and may overlap, null when no known counts. No binary evidence or provider tokens."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(200);",
+                  "const data=pm.response.json().data;",
+                  "pm.test(\"Private dashboard\",()=>pm.expect(pm.response.headers.get(\"Cache-Control\")).to.equal(\"no-store\"));",
+                  "pm.test(\"Readiness matches checks\",()=>{const completed=data.readiness.checks.filter(item=>item.complete).length;pm.expect(data.readiness.completed).to.equal(completed);pm.expect(data.readiness.percent).to.equal(Math.round(completed/data.readiness.total*100));});",
+                  "pm.test(\"Manual metrics\",()=>{pm.expect(data.social.metricsSource).to.equal(\"MANUAL\");for(const account of data.social.accounts)pm.expect(account.isVerified).to.equal(false);});",
+                  "pm.test(\"Safe metadata\",()=>pm.expect(JSON.stringify(data)).not.to.match(/password_hash|token_hash|fileContent|originalname/));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Campaign drafts — Module 06 Task 1",
+      "item": [
+        {
+          "name": "Read active campaign catalog choices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/catalogs",
+            "description": "Active BRAND_ADMIN only. Draft creation/editing. GET captures current editable snapshot/revision for PUT. Budget is a positive decimal string or null, explicit currency; deliverables must use selected catalog IDs. Owner/status are not writable. Full replacement clears omitted optional fields."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const campaign=pm.response.json().data?.campaign;",
+                  "if(campaign){pm.collectionVariables.set(\"campaign_id\",campaign.id);const {title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,revision}=campaign;const deliverables=campaign.deliverables.map(({platformId,contentTypeId,quantity,description})=>({platformId,contentTypeId,quantity,description}));pm.collectionVariables.set(\"campaign_json\",JSON.stringify({title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,deliverables,revision},null,2));pm.test(\"Exact budget DTO\",()=>pm.expect(campaign.totalBudget===null||typeof campaign.totalBudget===\"string\").to.equal(true));}",
+                  "pm.test(\"No credentials\",()=>pm.expect(pm.response.text()).not.to.match(/password_hash|token_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List own draft campaigns",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns?page=1&pageSize=10",
+            "description": "Active BRAND_ADMIN only. Draft creation/editing. GET captures current editable snapshot/revision for PUT. Budget is a positive decimal string or null, explicit currency; deliverables must use selected catalog IDs. Owner/status are not writable. Full replacement clears omitted optional fields."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const campaign=pm.response.json().data?.campaign;",
+                  "if(campaign){pm.collectionVariables.set(\"campaign_id\",campaign.id);const {title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,revision}=campaign;const deliverables=campaign.deliverables.map(({platformId,contentTypeId,quantity,description})=>({platformId,contentTypeId,quantity,description}));pm.collectionVariables.set(\"campaign_json\",JSON.stringify({title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,deliverables,revision},null,2));pm.test(\"Exact budget DTO\",()=>pm.expect(campaign.totalBudget===null||typeof campaign.totalBudget===\"string\").to.equal(true));}",
+                  "pm.test(\"No credentials\",()=>pm.expect(pm.response.text()).not.to.match(/password_hash|token_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create campaign draft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"title\": \"Summer lifestyle launch\",\n \"description\": \"Plan our creator collaboration\",\n \"totalBudget\": \"50000.00\",\n \"currency\": \"INR\",\n \"creatorSlots\": 4,\n \"requirements\": \"Original lifestyle content\",\n \"platformIds\": [],\n \"categoryIds\": [],\n \"contentTypeIds\": [],\n \"deliverables\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Active BRAND_ADMIN only. Draft creation/editing. GET captures current editable snapshot/revision for PUT. Budget is a positive decimal string or null, explicit currency; deliverables must use selected catalog IDs. Owner/status are not writable. Full replacement clears omitted optional fields."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const campaign=pm.response.json().data?.campaign;",
+                  "if(campaign){pm.collectionVariables.set(\"campaign_id\",campaign.id);const {title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,revision}=campaign;const deliverables=campaign.deliverables.map(({platformId,contentTypeId,quantity,description})=>({platformId,contentTypeId,quantity,description}));pm.collectionVariables.set(\"campaign_json\",JSON.stringify({title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,deliverables,revision},null,2));pm.test(\"Exact budget DTO\",()=>pm.expect(campaign.totalBudget===null||typeof campaign.totalBudget===\"string\").to.equal(true));}",
+                  "pm.test(\"No credentials\",()=>pm.expect(pm.response.text()).not.to.match(/password_hash|token_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Read owned campaign and capture revision",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}",
+            "description": "Active BRAND_ADMIN only. Draft creation/editing. GET captures current editable snapshot/revision for PUT. Budget is a positive decimal string or null, explicit currency; deliverables must use selected catalog IDs. Owner/status are not writable. Full replacement clears omitted optional fields."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const campaign=pm.response.json().data?.campaign;",
+                  "if(campaign){pm.collectionVariables.set(\"campaign_id\",campaign.id);const {title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,revision}=campaign;const deliverables=campaign.deliverables.map(({platformId,contentTypeId,quantity,description})=>({platformId,contentTypeId,quantity,description}));pm.collectionVariables.set(\"campaign_json\",JSON.stringify({title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,deliverables,revision},null,2));pm.test(\"Exact budget DTO\",()=>pm.expect(campaign.totalBudget===null||typeof campaign.totalBudget===\"string\").to.equal(true));}",
+                  "pm.test(\"No credentials\",()=>pm.expect(pm.response.text()).not.to.match(/password_hash|token_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Replace editable draft fields",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{{campaign_json}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Active BRAND_ADMIN only. Draft creation/editing. GET captures current editable snapshot/revision for PUT. Budget is a positive decimal string or null, explicit currency; deliverables must use selected catalog IDs. Owner/status are not writable. Full replacement clears omitted optional fields."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const campaign=pm.response.json().data?.campaign;",
+                  "if(campaign){pm.collectionVariables.set(\"campaign_id\",campaign.id);const {title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,revision}=campaign;const deliverables=campaign.deliverables.map(({platformId,contentTypeId,quantity,description})=>({platformId,contentTypeId,quantity,description}));pm.collectionVariables.set(\"campaign_json\",JSON.stringify({title,description,totalBudget,currency,creatorSlots,requirements,platformIds,categoryIds,contentTypeIds,deliverables,revision},null,2));pm.test(\"Exact budget DTO\",()=>pm.expect(campaign.totalBudget===null||typeof campaign.totalBudget===\"string\").to.equal(true));}",
+                  "pm.test(\"No credentials\",()=>pm.expect(pm.response.text()).not.to.match(/password_hash|token_hash/));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Campaign preparation — Module 06 Task 2",
+      "item": [
+        {
+          "name": "Read saved schedule and file metadata",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/preparation",
+            "description": "Owning Brand only; DRAFT-only mutations. Schedule/files have independent revisions. GET preparation first. Dates require explicit Z/offset and correct order. Upload one brief/five references, max 5 MiB each. Checks do not submit."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "if(data.schedule)pm.collectionVariables.set(\"campaign_schedule_revision\",data.schedule.revision);const file=data.files?.find(row=>row.kind===\"BRIEF\")||data.files?.[0];if(file){pm.collectionVariables.set(\"campaign_file_id\",file.id);pm.collectionVariables.set(\"campaign_file_revision\",file.revision);}",
+                  "pm.test(\"No private bytes/filenames\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Save schedule with future UTC dates",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/schedule",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"applicationsOpenAt\": \"{{applications_open_at}}\",\n \"applicationDeadline\": \"{{application_deadline}}\",\n \"startAt\": \"{{campaign_start_at}}\",\n \"contentDeadline\": \"{{content_deadline}}\",\n \"endAt\": \"{{campaign_end_at}}\",\n \"revision\": {{campaign_schedule_revision}}\n}"
+            },
+            "description": "Owning Brand only; DRAFT-only mutations. Schedule/files have independent revisions. GET preparation first. Dates require explicit Z/offset and correct order. Upload one brief/five references, max 5 MiB each. Checks do not submit."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "[\"applications_open_at\",\"application_deadline\",\"campaign_start_at\",\"content_deadline\",\"campaign_end_at\"].forEach((key,index)=>{if(!pm.collectionVariables.get(key))pm.collectionVariables.set(key,new Date(Date.now()+(index+2)*86400000).toISOString());});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "if(data.schedule)pm.collectionVariables.set(\"campaign_schedule_revision\",data.schedule.revision);const file=data.files?.find(row=>row.kind===\"BRIEF\")||data.files?.[0];if(file){pm.collectionVariables.set(\"campaign_file_id\",file.id);pm.collectionVariables.set(\"campaign_file_revision\",file.revision);}",
+                  "pm.test(\"No private bytes/filenames\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Check saved campaign readiness",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/readiness",
+            "description": "Owning Brand only; DRAFT-only mutations. Schedule/files have independent revisions. GET preparation first. Dates require explicit Z/offset and correct order. Upload one brief/five references, max 5 MiB each. Checks do not submit."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "if(data.schedule)pm.collectionVariables.set(\"campaign_schedule_revision\",data.schedule.revision);const file=data.files?.find(row=>row.kind===\"BRIEF\")||data.files?.[0];if(file){pm.collectionVariables.set(\"campaign_file_id\",file.id);pm.collectionVariables.set(\"campaign_file_revision\",file.revision);}",
+                  "pm.test(\"No private bytes/filenames\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Upload campaign brief",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/files",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "kind",
+                  "value": "BRIEF",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Campaign brief",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Owning Brand only; DRAFT-only mutations. Schedule/files have independent revisions. GET preparation first. Dates require explicit Z/offset and correct order. Upload one brief/five references, max 5 MiB each. Checks do not submit."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "if(data.schedule)pm.collectionVariables.set(\"campaign_schedule_revision\",data.schedule.revision);const file=data.files?.find(row=>row.kind===\"BRIEF\")||data.files?.[0];if(file){pm.collectionVariables.set(\"campaign_file_id\",file.id);pm.collectionVariables.set(\"campaign_file_revision\",file.revision);}",
+                  "pm.test(\"No private bytes/filenames\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Download owned campaign file",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/files/{{campaign_file_id}}",
+            "description": "Owning Brand only; DRAFT-only mutations. Schedule/files have independent revisions. GET preparation first. Dates require explicit Z/offset and correct order. Upload one brief/five references, max 5 MiB each. Checks do not submit."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.response.to.have.status(200);",
+                  "pm.test(\"Private file\",()=>pm.expect(pm.response.headers.get(\"Cache-Control\")).to.equal(\"no-store\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Replace campaign file",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/files/{{campaign_file_id}}",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "revision",
+                  "value": "{{campaign_file_revision}}",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Campaign brief",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Owning Brand only; DRAFT-only mutations. Schedule/files have independent revisions. GET preparation first. Dates require explicit Z/offset and correct order. Upload one brief/five references, max 5 MiB each. Checks do not submit."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "if(data.schedule)pm.collectionVariables.set(\"campaign_schedule_revision\",data.schedule.revision);const file=data.files?.find(row=>row.kind===\"BRIEF\")||data.files?.[0];if(file){pm.collectionVariables.set(\"campaign_file_id\",file.id);pm.collectionVariables.set(\"campaign_file_revision\",file.revision);}",
+                  "pm.test(\"No private bytes/filenames\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Remove campaign file",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/files/{{campaign_file_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n \"revision\": {{campaign_file_revision}}\n}"
+            },
+            "description": "Owning Brand only; DRAFT-only mutations. Schedule/files have independent revisions. GET preparation first. Dates require explicit Z/offset and correct order. Upload one brief/five references, max 5 MiB each. Checks do not submit."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Success\",()=>pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "const data=pm.response.json().data;",
+                  "if(data.schedule)pm.collectionVariables.set(\"campaign_schedule_revision\",data.schedule.revision);const file=data.files?.find(row=>row.kind===\"BRIEF\")||data.files?.[0];if(file){pm.collectionVariables.set(\"campaign_file_id\",file.id);pm.collectionVariables.set(\"campaign_file_revision\",file.revision);}",
+                  "pm.test(\"No private bytes/filenames\",()=>pm.expect(JSON.stringify(data)).not.to.match(/fileContent|originalname|password_hash/));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Campaign approval — Module 06 Task 3",
+      "description": "Sign in as Brand for own routes; sign in as Super Admin for admin routes. Copy latest campaign/schedule revisions from review detail. Decisions require reasons. Approval does not publish.",
+      "item": [
+        {
+          "name": "Brand review and history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/review"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) { const c=pm.response.json().data.campaign; pm.collectionVariables.set('campaignRevision',c.revision); pm.collectionVariables.set('campaignScheduleRevision',c.scheduleRevision); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Submit saved draft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/submit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{campaignRevision}},\n  \"scheduleRevision\": {{campaignScheduleRevision}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Return rejected campaign to draft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/revise",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{campaignRevision}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Admin pending review queue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/campaign-reviews?status=PENDING_APPROVAL&page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Admin review details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/campaign-reviews/{{campaignId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) { const c=pm.response.json().data.campaign; pm.collectionVariables.set('campaignRevision',c.revision); pm.collectionVariables.set('campaignScheduleRevision',c.scheduleRevision); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin approve or reject",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/campaign-reviews/{{campaignId}}/decision",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{campaignRevision}},\n  \"decision\": \"APPROVE\",\n  \"reason\": \"Reviewed the campaign brief, requirements and schedule.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Admin private file download",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/campaign-reviews/{{campaignId}}/files/{{campaignFileId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaign lifecycle — Module 06 Task 4",
+      "description": "Brand owns publish/pause/resume/cancel/deletion. Admin allows CANCEL only. Read management state before actions to get latest revision. Deletion is permanent and allowed only for unused drafts. Schedule refresh never takes client clock values.",
+      "item": [
+        {
+          "name": "Filter own campaigns",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns?status=LIVE&q=launch&page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Brand management and combined history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/lifecycle"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.code===200) pm.collectionVariables.set('campaignRevision',pm.response.json().data.campaign.revision);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Publish approved campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/lifecycle/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"PUBLISH\",\n  \"revision\": {{campaignRevision}},\n  \"reason\": \"Publish this reviewed campaign during its application window.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Pause live campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/lifecycle/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"PAUSE\",\n  \"revision\": {{campaignRevision}},\n  \"reason\": \"Temporarily pause new creator applications.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Resume paused campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/lifecycle/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"RESUME\",\n  \"revision\": {{campaignRevision}},\n  \"reason\": \"Resume accepting applications within the original schedule.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cancel campaign - final",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/lifecycle/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"CANCEL\",\n  \"revision\": {{campaignRevision}},\n  \"reason\": \"Campaign is cancelled and its history will be retained.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Refresh due schedule status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/lifecycle/refresh",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete unused draft - permanent",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{campaignRevision}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Admin lifecycle state",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/campaign-management/{{campaignId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.code===200) pm.collectionVariables.set('campaignRevision',pm.response.json().data.campaign.revision);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin cancellation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/campaign-management/{{campaignId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"CANCEL\",\n  \"revision\": {{campaignRevision}},\n  \"reason\": \"Administrative cancellation of this campaign.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Admin schedule refresh",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/campaign-management/{{campaignId}}/refresh",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Creator campaign discovery — Module 07 Task 1",
+      "description": "Sign in as active Creator. Browse is read-only; list, details and campaign files require an open LIVE campaign and active Brand/catalog choices. Only files returned in visible details can be downloaded. Budget/slots are campaign planning values.",
+      "item": [
+        {
+          "name": "Browse open campaigns",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/campaigns?page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Search title or Brand",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/campaigns?q=launch&page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Active filter choices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/campaigns/catalogs"
+          }
+        },
+        {
+          "name": "Combined filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/campaigns?platformId={{platformId}}&categoryId={{categoryId}}&contentTypeId={{contentTypeId}}&currency=INR"
+          }
+        },
+        {
+          "name": "Live campaign details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/campaigns/{{campaignId}}"
+          }
+        },
+        {
+          "name": "Published brief/reference download",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/campaigns/{{campaignId}}/files/{{campaignFileId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Creator applications — Module 07 Task 2",
+      "description": "Use an active Creator token. Identity/profile/category/social checks must pass; eligibility rechecks on submit. One application for life per campaign/Creator; withdrawal final. No slots reserved. Fetch application detail to refresh revision.",
+      "item": [
+        {
+          "name": "Eligibility checks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/campaigns/{{campaignId}}/application-eligibility"
+          }
+        },
+        {
+          "name": "Submit application",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/campaigns/{{campaignId}}/applications",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pitch\": \"I will create original product demonstrations matching this campaign brief and its requirements.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if([200,201].includes(pm.response.code)){const a=pm.response.json().data.application;pm.collectionVariables.set('applicationId',a.id);pm.collectionVariables.set('applicationRevision',a.revision);}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "My applications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/applications?page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Filter application status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/applications?status=PENDING"
+          }
+        },
+        {
+          "name": "Application and history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/applications/{{applicationId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if([200,201].includes(pm.response.code)){const a=pm.response.json().data.application;pm.collectionVariables.set('applicationId',a.id);pm.collectionVariables.set('applicationRevision',a.revision);}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Withdraw application - final",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/creator/applications/{{applicationId}}/withdraw",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{applicationRevision}},\n  \"reason\": \"I am no longer available for this campaign schedule.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Brand applicants — Module 07 Task 3",
+      "description": "Sign in as owning Brand. Read applicant detail before decisions to get current revision. Reasons are visible to the Creator. Approvals reserve a slot atomically; no reversal endpoint. Portfolio excludes verification evidence.",
+      "item": [
+        {
+          "name": "Applicant list and capacity",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/applicants?page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Filter pending applicants",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/applicants?status=PENDING"
+          }
+        },
+        {
+          "name": "Applicant profile and history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/applicants/{{applicationId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.code===200)pm.collectionVariables.set('applicationRevision',pm.response.json().data.application.revision);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "SHORTLIST applicant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/applicants/{{applicationId}}/decision",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"decision\": \"SHORTLIST\",\n  \"revision\": {{applicationRevision}},\n  \"reason\": \"Reviewed the creator pitch and supporting campaign fit.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.code===200)pm.collectionVariables.set('applicationRevision',pm.response.json().data.application.revision);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "APPROVE applicant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/applicants/{{applicationId}}/decision",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"decision\": \"APPROVE\",\n  \"revision\": {{applicationRevision}},\n  \"reason\": \"Reviewed the creator pitch and supporting campaign fit.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.code===200)pm.collectionVariables.set('applicationRevision',pm.response.json().data.application.revision);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "REJECT applicant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/applicants/{{applicationId}}/decision",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"decision\": \"REJECT\",\n  \"revision\": {{applicationRevision}},\n  \"reason\": \"Reviewed the creator pitch and supporting campaign fit.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.code===200)pm.collectionVariables.set('applicationRevision',pm.response.json().data.application.revision);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Applicant photo or portfolio download",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/brand/campaigns/{{campaignId}}/applicants/{{applicationId}}/files/{{applicantFileId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaign workspaces — Module 7 Task 4",
+      "item": [
+        {
+          "name": "brand allocated campaigns",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces",
+            "description": "Owning active Brand or approved allocated Creator only. Cancelled/closed campaigns remain historical. Creator sees own allocation only. Files are private/audited. No content submission or payment action."
+          }
+        },
+        {
+          "name": "brand workspace details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}",
+            "description": "Owning active Brand or approved allocated Creator only. Cancelled/closed campaigns remain historical. Creator sees own allocation only. Files are private/audited. No content submission or payment action."
+          }
+        },
+        {
+          "name": "brand campaign attachment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/files/{{file_id}}",
+            "description": "Owning active Brand or approved allocated Creator only. Cancelled/closed campaigns remain historical. Creator sees own allocation only. Files are private/audited. No content submission or payment action."
+          }
+        },
+        {
+          "name": "creator allocated campaigns",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces",
+            "description": "Owning active Brand or approved allocated Creator only. Cancelled/closed campaigns remain historical. Creator sees own allocation only. Files are private/audited. No content submission or payment action."
+          }
+        },
+        {
+          "name": "creator workspace details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}",
+            "description": "Owning active Brand or approved allocated Creator only. Cancelled/closed campaigns remain historical. Creator sees own allocation only. Files are private/audited. No content submission or payment action."
+          }
+        },
+        {
+          "name": "creator campaign attachment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/files/{{file_id}}",
+            "description": "Owning active Brand or approved allocated Creator only. Cancelled/closed campaigns remain historical. Creator sees own allocation only. Files are private/audited. No content submission or payment action."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Creator content submissions — Module 8 Task 1",
+      "item": [
+        {
+          "name": "Read own content and remaining deliverable units",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions"
+          }
+        },
+        {
+          "name": "Submit required published content item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions",
+            "description": "Use the platform/content type IDs and unsubmitted item number from GET; use a real publication timestamp between campaign start and now. Active Creator allocation and IN_PROGRESS content window required. Immutable initial submission, no evidence or Brand decision.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"platformId\": 1,\n  \"contentTypeId\": 1,\n  \"unitNumber\": 1,\n  \"contentUrl\": \"https://example.com/published-content\",\n  \"caption\": \"Original product demonstration #ad\",\n  \"publishedAt\": \"{{published_at}}\",\n  \"notes\": \"Optional context\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Content evidence and versions — Module 8 Task 2",
+      "item": [
+        {
+          "name": "Latest history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions/{{submission_id}}/history"
+          }
+        },
+        {
+          "name": "Original version",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions/{{submission_id}}/history?version=1"
+          }
+        },
+        {
+          "name": "Save corrected content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions/{{submission_id}}/versions",
+            "description": "Use current version from history; only SUBMITTED in open campaign window. Every edit appends a snapshot.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": 1,\n  \"reason\": \"Correct the submission while retaining the previous version.\",\n  \"contentUrl\": \"https://example.com/corrected-content\",\n  \"caption\": \"Corrected caption #ad\",\n  \"publishedAt\": \"{{published_at}}\",\n  \"notes\": \"Corrected details\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add private evidence",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions/{{submission_id}}/evidence",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "version",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "reason",
+                  "value": "Add published campaign proof to this submission.",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Published content proof",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Remove current evidence (history retained)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions/{{submission_id}}/evidence/{{file_id}}/remove",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": 1,\n  \"reason\": \"Correct the submission while retaining the previous version.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Download historical evidence",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions/{{submission_id}}/versions/{{content_version}}/evidence/{{file_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Brand content review — Module 8 Task 3",
+      "item": [
+        {
+          "name": "Campaign content",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/submissions"
+          }
+        },
+        {
+          "name": "Submitted content filter",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/submissions?status=SUBMITTED"
+          }
+        },
+        {
+          "name": "Latest content and evidence",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/submissions/{{submission_id}}/history"
+          }
+        },
+        {
+          "name": "Original version",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/submissions/{{submission_id}}/history?version=1"
+          }
+        },
+        {
+          "name": "APPROVE",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/submissions/{{submission_id}}/decision",
+            "description": "Choose one decision for the latest SUBMITTED version. Use numeric current version from GET. Reason is shared with Creator. Revision request needs open deadline. No campaign completion/payment.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": 1,\n  \"decision\": \"APPROVE\",\n  \"reason\": \"Reviewed the content against the campaign brief and required deliverables.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "REJECT",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/submissions/{{submission_id}}/decision",
+            "description": "Choose one decision for the latest SUBMITTED version. Use numeric current version from GET. Reason is shared with Creator. Revision request needs open deadline. No campaign completion/payment.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": 1,\n  \"decision\": \"REJECT\",\n  \"reason\": \"Reviewed the content against the campaign brief and required deliverables.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "REQUEST_REVISION",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/submissions/{{submission_id}}/decision",
+            "description": "Choose one decision for the latest SUBMITTED version. Use numeric current version from GET. Reason is shared with Creator. Revision request needs open deadline. No campaign completion/payment.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": 1,\n  \"decision\": \"REQUEST_REVISION\",\n  \"reason\": \"Reviewed the content against the campaign brief and required deliverables.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Private evidence for a reviewed version",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/submissions/{{submission_id}}/versions/{{content_version}}/evidence/{{file_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Module 08 Task 4 - Revision responses and completion",
+      "description": "Use a Creator access token for Creator requests and owning Brand token for Brand requests. Copy latest content_version and progress.revision into campaign_revision before writes. Request a revision first; fill every Creator slot and approve every required unit before completion.",
+      "item": [
+        {
+          "name": "Creator revision response",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/submissions/{{submission_id}}/resubmit",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": {{content_version}},\n  \"reason\": \"Updated the disclosure requested by the Brand.\",\n  \"contentUrl\": \"https://example.com/corrected-campaign-reel\",\n  \"caption\": \"Paid partnership. Corrected campaign reel #ad\",\n  \"publishedAt\": \"{{published_at}}\",\n  \"notes\": \"Revised content for review.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Creator own approval progress",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/progress"
+          }
+        },
+        {
+          "name": "Brand campaign approval progress",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/progress"
+          }
+        },
+        {
+          "name": "Brand complete approved campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/complete",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{campaign_revision}},\n  \"reason\": \"All required campaign deliverables have been reviewed and approved.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Module 09 Task 1 - Razorpay Test Mode campaign funding",
+      "description": "Owning Brand token required. Choose an approved/active INR campaign and its current revision. Amount always comes from the saved budget. Callback values/signature must come from genuine Razorpay Test Checkout; do not invent success. Webhooks require exact raw-body HMAC and event ID; configure using docs/MODULE_09_TASK_01.md.",
+      "item": [
+        {
+          "name": "Owned campaign funding",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/funding",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Create or reuse test order",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/funding/order",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{campaign_revision}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Check existing payment status",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/funding/refresh",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verify Razorpay checkout",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/funding/verify",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"razorpay_order_id\": \"{{razorpay_order_id}}\",\n  \"razorpay_payment_id\": \"{{razorpay_payment_id}}\",\n  \"razorpay_signature\": \"{{razorpay_signature}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Module 09 Task 2 - Wallet and history",
+      "description": "Use the matching signed-in Brand/Creator token. All amounts are decimal strings in integer paise. Captures create immutable balanced journals; authorization/failure cannot increase wallets. Optional transaction filters: direction=CREDIT|DEBIT, campaignId, from inclusive ISO instant, to exclusive ISO instant; payments use status=AUTHORIZED|CAPTURED|FAILED. Summary rejects query fields. No credit, debit, transfer or withdrawal mutations.",
+      "item": [
+        {
+          "name": "Brand held campaign funds",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/wallet"
+          }
+        },
+        {
+          "name": "Brand held campaign funds - transaction history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/wallet/transactions?page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Creator recorded earnings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/wallet"
+          }
+        },
+        {
+          "name": "Creator recorded earnings - transaction history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/creator/wallet/transactions?page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Brand verified payment attempts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/wallet/payments?page=1&pageSize=10"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Module 09 Task 3 — Creator earnings release",
+      "item": [
+        {
+          "name": "Preview Creator split and commission",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/earnings-release"
+          }
+        },
+        {
+          "name": "Release Creator test-wallet earnings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/earnings-release",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{campaign_revision}}\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Module 09 Task 4 — Refunds and payment review",
+      "item": [
+        {
+          "name": "Read campaign refunds",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/refunds"
+          }
+        },
+        {
+          "name": "Request full test refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/refunds",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": {{campaign_revision}},\n  \"reason\": \"Cancelled campaign full refund request.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Check refund status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/refunds/refresh",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Request manual refund review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/brand/campaigns/{{campaign_id}}/refunds/review",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amountMinor\": \"100\",\n  \"reason\": \"Review this partial refund request.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin payment review queue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/payment-reviews?page=1&pageSize=10"
+          }
+        },
+        {
+          "name": "Admin review note",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/admin/payment-reviews/{{payment_review_id}}/notes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": 1,\n  \"action\": \"NOTE\",\n  \"reason\": \"Review the exception before any financial action.\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Module 10 Task 1 - Campaign reviews",
+      "item": [
+        {
+          "name": "Brand: reviews for completed campaign",
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              }
+            ],
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/reviews"
+          }
+        },
+        {
+          "name": "Brand: review allocated Creator",
+          "request": {
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revieweeUserId\": \"{{reviewee_user_id}}\",\n  \"rating\": 5,\n  \"comment\": \"Clear communication and a smooth collaboration.\"\n}"
+            },
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              },
+              {
+                "value": "InfluenceWeb",
+                "key": "X-Requested-With"
+              },
+              {
+                "value": "application/json",
+                "key": "Content-Type"
+              }
+            ],
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/reviews"
+          }
+        },
+        {
+          "name": "Creator: reviews for completed campaign",
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              }
+            ],
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/reviews"
+          }
+        },
+        {
+          "name": "Creator: review owning Brand",
+          "request": {
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revieweeUserId\": \"{{reviewee_user_id}}\",\n  \"rating\": 5,\n  \"comment\": \"The campaign brief and feedback were clear.\"\n}"
+            },
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              },
+              {
+                "value": "InfluenceWeb",
+                "key": "X-Requested-With"
+              },
+              {
+                "value": "application/json",
+                "key": "Content-Type"
+              }
+            ],
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/reviews"
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              }
+            ],
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/conversations"
+          },
+          "name": "Brand: list Creator conversations"
+        },
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              }
+            ],
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/conversations/{{application_id}}/messages?page=1&pageSize=50"
+          },
+          "name": "Brand: read message history"
+        },
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              },
+              {
+                "value": "InfluenceWeb",
+                "key": "X-Requested-With"
+              },
+              {
+                "value": "application/json",
+                "key": "Content-Type"
+              }
+            ],
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/conversations/{{application_id}}/messages",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"body\": \"Hello, let us coordinate this campaign here.\"\n}"
+            }
+          },
+          "name": "Brand: send a message"
+        },
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              },
+              {
+                "value": "InfluenceWeb",
+                "key": "X-Requested-With"
+              }
+            ],
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/conversations/{{application_id}}/attachments",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Campaign reference",
+                  "type": "text"
+                },
+                {
+                  "key": "body",
+                  "value": "Please review this attached reference.",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "src": "",
+                  "type": "file"
+                }
+              ]
+            }
+          },
+          "name": "Brand: send private attachment"
+        },
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              },
+              {
+                "value": "InfluenceWeb",
+                "key": "X-Requested-With"
+              },
+              {
+                "value": "application/json",
+                "key": "Content-Type"
+              }
+            ],
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/brand/workspaces/{{campaign_id}}/conversations/{{application_id}}/read",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"messageIds\": [\"{{message_id}}\"]\n}"
+            }
+          },
+          "name": "Brand: mark selected messages read"
+        },
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              }
+            ],
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/conversations"
+          },
+          "name": "Creator: list own Brand conversation"
+        },
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              }
+            ],
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/conversations/{{application_id}}/messages?page=1&pageSize=50"
+          },
+          "name": "Creator: read message history"
+        },
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              },
+              {
+                "value": "InfluenceWeb",
+                "key": "X-Requested-With"
+              },
+              {
+                "value": "application/json",
+                "key": "Content-Type"
+              }
+            ],
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/conversations/{{application_id}}/messages",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"body\": \"Thanks, I will share an update here.\"\n}"
+            }
+          },
+          "name": "Creator: send a message"
+        },
+        {
+          "request": {
+            "header": [
+              {
+                "value": "Bearer {{access_token}}",
+                "key": "Authorization"
+              },
+              {
+                "value": "InfluenceWeb",
+                "key": "X-Requested-With"
+              },
+              {
+                "value": "application/json",
+                "key": "Content-Type"
+              }
+            ],
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/creator/workspaces/{{campaign_id}}/conversations/{{application_id}}/read",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"messageIds\": [\"{{message_id}}\"]\n}"
+            }
+          },
+          "name": "Creator: mark selected messages read"
+        }
+      ],
+      "name": "Module 10 Task 2 - Campaign conversations"
+    },
+    {
+      "name": "Module 10 Task 3 - In-app notifications",
+      "item": [
+        {
+          "name": "List my notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/notifications?page=1&pageSize=20"
+          }
+        },
+        {
+          "name": "Read my unread count",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/notifications/unread-count"
+          }
+        },
+        {
+          "name": "Mark one notification read",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/notifications/{{notification_id}}/read"
+          }
+        },
+        {
+          "name": "Mark all notifications read",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "InfluenceWeb"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/notifications/read-all"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Module 11 Task 4 - Filtered financial reports",
+      "description": "Use a token for the route role. Reports include posted INR Test Mode ledger events only. Export matches the filters and is capped at 5,000 rows. Creator exports show only your own released earnings.",
+      "item": [
+        {
+          "name": "Super Admin financial report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/analytics/reports?from={{report_from}}&to={{report_to}}&status={{campaign_status}}&campaignId={{campaign_id}}&q={{report_search}}&page=1&pageSize=10&format=json",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "analytics",
+                "reports"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "{{report_from}}",
+                  "disabled": true
+                },
+                {
+                  "key": "to",
+                  "value": "{{report_to}}",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "{{campaign_status}}",
+                  "disabled": true
+                },
+                {
+                  "key": "campaignId",
+                  "value": "{{campaign_id}}",
+                  "disabled": true
+                },
+                {
+                  "key": "q",
+                  "value": "{{report_search}}",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10",
+                  "disabled": true
+                },
+                {
+                  "key": "format",
+                  "value": "json",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "SUPER_ADMIN only. Scope is derived from the authenticated account."
+          },
+          "response": []
+        },
+        {
+          "name": "Export current financial report as CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/admin/analytics/reports?format=csv",
+            "description": "Choose the matching role-specific report URL above. Keep identical filters and set format=csv. CSV is capped at 5,000 rows."
+          },
+          "response": []
+        },
+        {
+          "name": "Brand financial report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/brand/reports?from={{report_from}}&to={{report_to}}&status={{campaign_status}}&campaignId={{campaign_id}}&q={{report_search}}&page=1&pageSize=10&format=json",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "brand",
+                "reports"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "{{report_from}}",
+                  "disabled": true
+                },
+                {
+                  "key": "to",
+                  "value": "{{report_to}}",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "{{campaign_status}}",
+                  "disabled": true
+                },
+                {
+                  "key": "campaignId",
+                  "value": "{{campaign_id}}",
+                  "disabled": true
+                },
+                {
+                  "key": "q",
+                  "value": "{{report_search}}",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10",
+                  "disabled": true
+                },
+                {
+                  "key": "format",
+                  "value": "json",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "BRAND_ADMIN only. Scope is derived from the authenticated account."
+          },
+          "response": []
+        },
+        {
+          "name": "Export current financial report as CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/admin/analytics/reports?format=csv",
+            "description": "Choose the matching role-specific report URL above. Keep identical filters and set format=csv. CSV is capped at 5,000 rows."
+          },
+          "response": []
+        },
+        {
+          "name": "Creator earnings report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/creator/reports?from={{report_from}}&to={{report_to}}&status={{campaign_status}}&campaignId={{campaign_id}}&q={{report_search}}&page=1&pageSize=10&format=json",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "creator",
+                "reports"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "{{report_from}}",
+                  "disabled": true
+                },
+                {
+                  "key": "to",
+                  "value": "{{report_to}}",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "{{campaign_status}}",
+                  "disabled": true
+                },
+                {
+                  "key": "campaignId",
+                  "value": "{{campaign_id}}",
+                  "disabled": true
+                },
+                {
+                  "key": "q",
+                  "value": "{{report_search}}",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10",
+                  "disabled": true
+                },
+                {
+                  "key": "format",
+                  "value": "json",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "CREATOR only. Scope is derived from the authenticated account."
+          },
+          "response": []
+        },
+        {
+          "name": "Export current financial report as CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/admin/analytics/reports?format=csv",
+            "description": "Choose the matching role-specific report URL above. Keep identical filters and set format=csv. CSV is capped at 5,000 rows."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
