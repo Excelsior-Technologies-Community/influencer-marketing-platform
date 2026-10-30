@@ -6,7 +6,7 @@ import { pool } from '../src/config/db.js';
 import { callProcedure } from '../src/repositories/procedure.repository.js';
 import { hashPassword } from '../src/utils/password.js';
 
-describe('Module 5 Task 4 dashboard and combined workflow with MySQL',()=>{
+describe('dashboard and combined workflow with MySQL',()=>{
   const app=createApp({logging:false}),prefix=`dashboard-${randomUUID()}`,users={},tokens={},password='Dashboard-tests-password-2026';
   let categoryId,platformId,otherPlatformId,creatorId,png;
   const headers=(role='CREATOR')=>({Authorization:`Bearer ${tokens[role]}`,'X-Requested-With':'InfluenceWeb'});

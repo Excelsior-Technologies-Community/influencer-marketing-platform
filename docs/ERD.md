@@ -590,4 +590,4 @@ wallet_journals {
 - `creator_campaign_eligibility`
 - `creator_discoverable_campaigns`
 
-See [Architecture](ARCHITECTURE.md) for workflow invariants and [Module roadmap](MODULES.md) for feature scope.
+See [System Architecture](ARCHITECTURE.md) for workflow invariants and [Getting Started](GETTING_STARTED.md) for local setup.

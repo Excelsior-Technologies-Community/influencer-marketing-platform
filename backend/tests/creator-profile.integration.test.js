@@ -5,7 +5,7 @@ import { pool } from '../src/config/db.js';
 import { callProcedure } from '../src/repositories/procedure.repository.js';
 import { hashPassword } from '../src/utils/password.js';
 
-describe('Module 5 Task 1 Creator profile with real MySQL',()=>{
+describe('Creator profile with real MySQL',()=>{
   const app=createApp({logging:false}),prefix=`creator-${randomUUID()}`,password='Creator-profile-test-2026',users={},tokens={};
   let creatorId,parentId,categoryId,inactiveId;
   const get=(path='',role='CREATOR')=>request(app).get(`/api/v1/creator/profile${path}`).set('Authorization',`Bearer ${tokens[role]}`);

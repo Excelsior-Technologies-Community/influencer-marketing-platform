@@ -5,7 +5,7 @@ import { pool } from '../src/config/db.js';
 import { callProcedure } from '../src/repositories/procedure.repository.js';
 import { hashPassword } from '../src/utils/password.js';
 
-describe('Module 3 Super Admin integration with MySQL',()=>{
+describe('Super Admin integration with MySQL',()=>{
   const app=createApp({logging:false}),prefix=`m3-${randomUUID()}`,password='Admin-test-password-2026';
   const users={},tokens={},cookies={},catalogIds={categories:[],platforms:[],'content-types':[]};
   let rootCategory,childCategory;
@@ -78,7 +78,7 @@ describe('Module 3 Super Admin integration with MySQL',()=>{
   });
   test('suspension revokes access/refresh; activation does not revive old sessions; audit records actor/reason',async()=>{
     const old=tokens.CREATOR,cookie=cookies.CREATOR;
-    const suspended=await operation('patch',`/creators/${users.CREATOR.profileId}/status`,{status:'SUSPENDED',reason:'Module 3 suspension test'}).expect(200);
+    const suspended=await operation('patch',`/creators/${users.CREATOR.profileId}/status`,{status:'SUSPENDED',reason:'suspension test'}).expect(200);
     expect(suspended.body.data.account.status).toBe('SUSPENDED');
     await request(app).get('/api/v1/auth/me').set('Authorization',`Bearer ${old}`).expect(401);
     await request(app).post('/api/v1/auth/refresh-token').set('X-Requested-With','InfluenceWeb').set('Cookie',cookie).expect(401);
@@ -86,7 +86,7 @@ describe('Module 3 Super Admin integration with MySQL',()=>{
     await request(app).get('/api/v1/auth/me').set('Authorization',`Bearer ${old}`).expect(401);
     await login('CREATOR');
     const audit=await operation('get',`/audit-logs?action=ACCOUNT_STATUS_CHANGED&entityId=${users.CREATOR.profileId}`).expect(200);
-    expect(audit.body.meta.total).toBe(2);expect(audit.body.data.items.some(row=>row.metadata.reason==='Module 3 suspension test'&&row.actorUserId===users.SUPER_ADMIN.id)).toBe(true);
+    expect(audit.body.meta.total).toBe(2);expect(audit.body.data.items.some(row=>row.metadata.reason==='suspension test'&&row.actorUserId===users.SUPER_ADMIN.id)).toBe(true);
     expect(audit.body.data.items[0].requestId).toMatch(/^[a-f0-9-]{36}$/);
   });
   test('unchanged status is idempotent and brand deactivation is enforced',async()=>{

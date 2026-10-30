@@ -4,8 +4,8 @@ import { randomUUID } from 'node:crypto';
 import { hashPassword } from '../src/utils/password.js';
 import { createIsolatedDatabase } from './helpers/isolated-database.js';
 
-// Cross-module Brand → Super Admin → Creator → Brand workflow. The database is
-// disposable because Module 10 notifications and financial records are immutable.
+// End-to-end Brand → Super Admin → Creator → Brand workflow. The database is
+// disposable because notifications and financial records are immutable.
 const isolated = await createIsolatedDatabase();
 const { createApp } = await import('../src/app.js');
 const { pool } = await import('../src/config/db.js');

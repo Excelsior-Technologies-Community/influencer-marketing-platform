@@ -9,7 +9,7 @@ import { loadAuthConfig } from '../src/config/auth.js';
 import { hashPassword } from '../src/utils/password.js';
 import { digest } from '../src/utils/tokens.js';
 
-describe('Module 2 integration with actual MySQL', () => {
+describe('integration with actual MySQL', () => {
   const prefix = `auth-${randomUUID()}`;
   const password = 'A-strong-test-password';
   const newPassword = 'Another-strong-password';

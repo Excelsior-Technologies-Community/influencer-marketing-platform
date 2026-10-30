@@ -32,7 +32,7 @@ const success = { type: 'object', required: ['success', 'message', 'data', 'meta
 const response = (description, schema) => ({ description, content: { 'application/json': { schema } } });
 export const openapi = {
   openapi: '3.0.3',
-  info: { title: 'Influencer Marketing API', version: '0.9.4', description: 'Local workflows for authentication, Brand and Creator profiles, campaigns, Creator applications, content review, Test Mode financial workflows, reviews and messaging, notifications, analytics and reports. Module 12 verification and handover are in progress. See the repository module guide for local workflow boundaries and configuration requirements.' },
+  info: { title: 'Influencer Marketing API', version: '0.9.4', description: 'Local workflows for authentication, Brand and Creator profiles, campaigns, Creator applications, content review, Test Mode financial workflows, reviews and messaging, notifications, analytics and reports. Local configuration, product workflows and deployment boundaries are documented in the repository guides.' },
   servers: [{ url: '/api/v1' }],
   tags: [{ name: 'System' }, { name: 'Authentication' },{name:'Super Admin'},{name:'Brand'},{name:'Creator profile'},{name:'Analytics'},{name:'Reviews'},{name:'Messaging'},{name:'Notifications'}],
   components: { schemas: { Success: success, Error: error }, securitySchemes: { bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, refreshCookie: { type: 'apiKey', in: 'cookie', name: 'influence_refresh' } } },

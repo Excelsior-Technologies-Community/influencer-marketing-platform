@@ -5,7 +5,7 @@ import {createApp} from '../src/app.js';
 import {pool} from '../src/config/db.js';
 import {callProcedure} from '../src/repositories/procedure.repository.js';
 import {hashPassword} from '../src/utils/password.js';
-describe('Module 7 Task 1 discovery with actual MySQL',()=>{
+describe('discovery with actual MySQL',()=>{
  let app=createApp({logging:false}),platformId,categoryId,typeId,pdf,live,second;const users={},tokens={},ids=[],prefix=`discovery-${randomUUID()}`,password='Discovery-test-password-2026';
  const headers=(role='CREATOR')=>({Authorization:`Bearer ${tokens[role]}`,'X-Requested-With':'InfluenceWeb'});
  const base=id=>`/api/v1/brand/campaigns/${id}`;

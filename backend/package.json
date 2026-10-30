@@ -12,7 +12,7 @@
     "setup:admin": "node scripts/create-admin.js",
     "docs:erd": "node scripts/generate-erd.js",
     "production:check": "node scripts/production-preflight.js",
-    "setup:module2": "node scripts/setup-auth.js",
+    "setup:auth": "node scripts/setup-auth.js",
     "campaigns:refresh": "node scripts/refresh-campaigns.js",
     "payments:verify": "node scripts/verify-payments.js",
     "wallets:verify": "node scripts/verify-wallets.js"

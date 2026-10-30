@@ -16,7 +16,7 @@
     "db:migrate": "npm run db:migrate -w backend",
     "db:verify": "npm run db:verify -w backend",
     "production:check": "npm run production:check -w backend",
-    "setup:module2": "npm run setup:module2 -w backend",
+    "setup:auth": "npm run setup:auth -w backend",
     "payments:verify": "npm run payments:verify -w backend",
     "wallets:verify": "npm run wallets:verify -w backend"
   },

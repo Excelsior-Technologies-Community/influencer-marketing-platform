@@ -8,7 +8,7 @@ const {pool}=await import('../src/config/db.js');
 const {callProcedure}=await import('../src/repositories/procedure.repository.js');
 const {createRazorpayGateway,validSignature}=await import('../src/services/razorpay.gateway.js');
 
-describe('Module 9 Task 1 real MySQL funding with deterministic Razorpay transport',()=>{
+describe('real MySQL funding with deterministic Razorpay transport',()=>{
  const users={},tokens={},campaigns=[],orders=new Map(),payments=new Map();
  const keyId='rzp_test_Synthetic',secret='synthetic-test-secret-only',webhookSecret='synthetic-webhook-secret-only';
  let app,gateway,createCount=0,failure=null;

@@ -1,7 +1,7 @@
 import { registerSchema, resetPasswordSchema } from '../src/validators/auth.validator.js';
 import { hashPassword, verifyPassword } from '../src/utils/password.js';
 
-describe('Module 2 setup primitives', () => {
+describe('setup primitives', () => {
   const creator = { name: 'Test Creator', email: 'Creator@example.com', password: 'A-long-test-password', role: 'CREATOR' };
   test('allows creator registration and normalizes email', () => {
     expect(registerSchema.parse(creator).email).toBe('creator@example.com');

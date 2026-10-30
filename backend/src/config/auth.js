@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import './env.js';
 
-// Validate only when Module 2 is used, so Module 1 remains independently runnable.
+// Validate authentication settings only when authentication is used.
 const schema = z.object({
   JWT_ACCESS_SECRET: z.string().min(64),
   JWT_REFRESH_SECRET: z.string().min(64),
@@ -15,7 +15,7 @@ const schema = z.object({
 
 export function loadAuthConfig() {
   const result = schema.safeParse(process.env);
-  if (!result.success) throw new Error('Module 2 authentication configuration is invalid. Run npm run setup:module2 and check backend/.env.');
+  if (!result.success) throw new Error('Authentication configuration is invalid. Run npm run setup:auth and check backend/.env.');
   if (process.env.NODE_ENV === 'production' && (!process.env.EMAIL_HOST || !process.env.EMAIL_FROM)) throw new Error('Production authentication requires a configured SMTP host and sender.');
   return result.data;
 }

@@ -5,7 +5,7 @@ import { pool } from '../src/config/db.js';
 import { callProcedure } from '../src/repositories/procedure.repository.js';
 import { hashPassword } from '../src/utils/password.js';
 
-describe('Module 5 Task 2 social accounts with real MySQL',()=>{
+describe('social accounts with real MySQL',()=>{
   const app=createApp({logging:false}),prefix=`social-${randomUUID()}`,password='Social-tests-password-2026',users={},tokens={};
   let platformId,inactiveId,instagramId,account;
   const headers=role=>({Authorization:`Bearer ${tokens[role]}`,'X-Requested-With':'InfluenceWeb'});

@@ -60,7 +60,7 @@ try {
     '',
     ...(views.length ? views : ['No views found in the configured schema.']),
     '',
-    'See [Architecture](ARCHITECTURE.md) for workflow invariants and [Module roadmap](MODULES.md) for feature scope.',
+    'See [System Architecture](ARCHITECTURE.md) for workflow invariants and [Getting Started](GETTING_STARTED.md) for local setup.',
     ''
   ].join('\n');
   const path = fileURLToPath(new URL('../../docs/ERD.md', import.meta.url));

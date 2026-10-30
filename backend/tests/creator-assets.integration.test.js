@@ -7,7 +7,7 @@ import { pool } from '../src/config/db.js';
 import { callProcedure } from '../src/repositories/procedure.repository.js';
 import { hashPassword } from '../src/utils/password.js';
 
-describe('Module 5 Task 3 private Creator uploads with MySQL',()=>{
+describe('private Creator uploads with MySQL',()=>{
   const app=createApp({logging:false}),prefix=`assets-${randomUUID()}`,password='Assets-tests-password-2026',users={},tokens={};
   let png,jpeg,webp,pdf,creatorId,photo,portfolio,evidence;
   const headers=(role='CREATOR')=>({Authorization:`Bearer ${tokens[role]}`,'X-Requested-With':'InfluenceWeb'});

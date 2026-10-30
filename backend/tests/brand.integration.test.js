@@ -6,7 +6,7 @@ import { pool } from '../src/config/db.js';
 import { callProcedure } from '../src/repositories/procedure.repository.js';
 import { hashPassword } from '../src/utils/password.js';
 
-describe('Module 4 Brand workspace integration with MySQL',()=>{
+describe('Brand workspace integration with MySQL',()=>{
   const app=createApp({logging:false}),prefix=`m4-${randomUUID()}`,password='Brand-test-password-2026',users={},tokens={};
   let png,brandId;
   const get=(path,role='BRAND_ADMIN')=>request(app).get(`/api/v1/brand${path}`).set('Authorization',`Bearer ${tokens[role]}`);

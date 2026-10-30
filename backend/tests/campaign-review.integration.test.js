@@ -5,7 +5,7 @@ import {createApp} from '../src/app.js';
 import {pool} from '../src/config/db.js';
 import {callProcedure} from '../src/repositories/procedure.repository.js';
 import {hashPassword} from '../src/utils/password.js';
-describe('Module 6 Task 3 campaign approval with actual MySQL',()=>{
+describe('campaign approval with actual MySQL',()=>{
  const app=createApp({logging:false}),users={},tokens={},ids=[],prefix=`review-${randomUUID()}`,password='Review-test-password-2026';let platformId,categoryId,typeId,pdf;
  const headers=(role='BRAND_ADMIN')=>({Authorization:`Bearer ${tokens[role]}`,'X-Requested-With':'InfluenceWeb'});
  const brand=id=>`/api/v1/brand/campaigns/${id}`;

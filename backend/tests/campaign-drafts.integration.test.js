@@ -5,7 +5,7 @@ import {pool} from '../src/config/db.js';
 import {callProcedure} from '../src/repositories/procedure.repository.js';
 import {hashPassword} from '../src/utils/password.js';
 
-describe('Module 6 Task 1 campaign draft creation/editing with MySQL',()=>{
+describe('campaign draft creation/editing with MySQL',()=>{
   const app=createApp({logging:false}),prefix=`c6-${randomUUID()}`,users={},tokens={},password='Campaign-tests-password-2026';
   let platformId,typeId,categoryId,inactiveId,campaign;
   const headers=(role='BRAND_ADMIN')=>({Authorization:`Bearer ${tokens[role]}`,'X-Requested-With':'InfluenceWeb'});

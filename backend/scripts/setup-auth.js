@@ -21,4 +21,4 @@ for (const [key, value] of Object.entries(defaults)) {
   if (!new RegExp(`^${key}=`, 'm').test(contents)) contents = `${contents.trimEnd()}\n${key}=${value}\n`;
 }
 await writeFile(path, contents, { mode: 0o600 });
-console.log('Module 2 environment prepared. Existing secrets retained; no secrets displayed.');
+console.log('Authentication environment prepared. Existing secrets retained; no secrets displayed.');

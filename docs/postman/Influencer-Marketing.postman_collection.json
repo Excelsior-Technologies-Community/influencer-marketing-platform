@@ -1,8 +1,8 @@
 {
   "info": {
-    "name": "Influencer Marketing API — Modules 01–11",
+    "name": "Influencer Marketing API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Postman requests for the implemented local role workflows. Import the collection, set base_url, then follow module guides for prerequisites and request sequence. Use only Test Mode payment credentials."
+    "description": "Postman requests for the platform’s authentication, account, campaign, content, payment, messaging, notification and reporting workflows. Set base_url and use credentials in a private local environment. Payment requests require genuine Test Mode responses."
   },
   "variable": [
     {
@@ -1620,7 +1620,7 @@
       ]
     },
     {
-      "name": "Creator profile — Module 05 Task 1",
+      "name": "Creator profile — ",
       "item": [
         {
           "name": "Get own Creator profile",
@@ -1731,7 +1731,7 @@
       ]
     },
     {
-      "name": "Creator social accounts — Module 05 Task 2",
+      "name": "Creator social accounts — ",
       "item": [
         {
           "name": "List own accounts and platforms",
@@ -1902,7 +1902,7 @@
       ]
     },
     {
-      "name": "Creator files — Module 05 Task 3",
+      "name": "Creator files — ",
       "item": [
         {
           "name": "List own files",
@@ -2173,7 +2173,7 @@
       ]
     },
     {
-      "name": "Creator dashboard — Module 05 Task 4",
+      "name": "Creator dashboard — ",
       "item": [
         {
           "name": "Read own dashboard and readiness",
@@ -2208,7 +2208,7 @@
       ]
     },
     {
-      "name": "Campaign drafts — Module 06 Task 1",
+      "name": "Campaign drafts — ",
       "item": [
         {
           "name": "Read active campaign catalog choices",
@@ -2399,7 +2399,7 @@
       ]
     },
     {
-      "name": "Campaign preparation — Module 06 Task 2",
+      "name": "Campaign preparation — ",
       "item": [
         {
           "name": "Read saved schedule and file metadata",
@@ -2691,7 +2691,7 @@
       ]
     },
     {
-      "name": "Campaign approval — Module 06 Task 3",
+      "name": "Campaign approval — ",
       "description": "Sign in as Brand for own routes; sign in as Super Admin for admin routes. Copy latest campaign/schedule revisions from review detail. Decisions require reasons. Approval does not publish.",
       "item": [
         {
@@ -2861,7 +2861,7 @@
       ]
     },
     {
-      "name": "Campaign lifecycle — Module 06 Task 4",
+      "name": "Campaign lifecycle — ",
       "description": "Brand owns publish/pause/resume/cancel/deletion. Admin allows CANCEL only. Read management state before actions to get latest revision. Deletion is permanent and allowed only for unused drafts. Schedule refresh never takes client clock values.",
       "item": [
         {
@@ -3168,7 +3168,7 @@
       ]
     },
     {
-      "name": "Creator campaign discovery — Module 07 Task 1",
+      "name": "Creator campaign discovery — ",
       "description": "Sign in as active Creator. Browse is read-only; list, details and campaign files require an open LIVE campaign and active Brand/catalog choices. Only files returned in visible details can be downloaded. Budget/slots are campaign planning values.",
       "item": [
         {
@@ -3252,7 +3252,7 @@
       ]
     },
     {
-      "name": "Creator applications — Module 07 Task 2",
+      "name": "Creator applications — ",
       "description": "Use an active Creator token. Identity/profile/category/social checks must pass; eligibility rechecks on submit. One application for life per campaign/Creator; withdrawal final. No slots reserved. Fetch application detail to refresh revision.",
       "item": [
         {
@@ -3392,7 +3392,7 @@
       ]
     },
     {
-      "name": "Brand applicants — Module 07 Task 3",
+      "name": "Brand applicants — ",
       "description": "Sign in as owning Brand. Read applicant detail before decisions to get current revision. Reasons are visible to the Creator. Approvals reserve a slot atomically; no reversal endpoint. Portfolio excludes verification evidence.",
       "item": [
         {
@@ -3584,7 +3584,7 @@
       ]
     },
     {
-      "name": "Campaign workspaces — Module 7 Task 4",
+      "name": "Campaign workspaces — ",
       "item": [
         {
           "name": "brand allocated campaigns",
@@ -3673,7 +3673,7 @@
       ]
     },
     {
-      "name": "Creator content submissions — Module 8 Task 1",
+      "name": "Creator content submissions — ",
       "item": [
         {
           "name": "Read own content and remaining deliverable units",
@@ -3722,7 +3722,7 @@
       ]
     },
     {
-      "name": "Content evidence and versions — Module 8 Task 2",
+      "name": "Content evidence and versions — ",
       "item": [
         {
           "name": "Latest history",
@@ -3859,7 +3859,7 @@
       ]
     },
     {
-      "name": "Brand content review — Module 8 Task 3",
+      "name": "Brand content review — ",
       "item": [
         {
           "name": "Campaign content",
@@ -4007,7 +4007,7 @@
       ]
     },
     {
-      "name": "Module 08 Task 4 - Revision responses and completion",
+      "name": "Revision responses and completion",
       "description": "Use a Creator access token for Creator requests and owning Brand token for Brand requests. Copy latest content_version and progress.revision into campaign_revision before writes. Request a revision first; fill every Creator slot and approve every required unit before completion.",
       "item": [
         {
@@ -4099,8 +4099,8 @@
       ]
     },
     {
-      "name": "Module 09 Task 1 - Razorpay Test Mode campaign funding",
-      "description": "Owning Brand token required. Choose an approved/active INR campaign and its current revision. Amount always comes from the saved budget. Callback values/signature must come from genuine Razorpay Test Checkout; do not invent success. Webhooks require exact raw-body HMAC and event ID; configure using docs/MODULE_09_TASK_01.md.",
+      "name": "Razorpay Test Mode campaign funding",
+      "description": "Owning Brand token required. Choose an approved/active INR campaign and its current revision. Amount always comes from the saved budget. Callback values/signature must come from genuine Razorpay Test Checkout; do not invent success. Webhooks require exact raw-body HMAC and event ID; see Getting Started for payment setup.",
       "item": [
         {
           "name": "Owned campaign funding",
@@ -4208,7 +4208,7 @@
       ]
     },
     {
-      "name": "Module 09 Task 2 - Wallet and history",
+      "name": "Wallet and history",
       "description": "Use the matching signed-in Brand/Creator token. All amounts are decimal strings in integer paise. Captures create immutable balanced journals; authorization/failure cannot increase wallets. Optional transaction filters: direction=CREDIT|DEBIT, campaignId, from inclusive ISO instant, to exclusive ISO instant; payments use status=AUTHORIZED|CAPTURED|FAILED. Summary rejects query fields. No credit, debit, transfer or withdrawal mutations.",
       "item": [
         {
@@ -4279,7 +4279,7 @@
       ]
     },
     {
-      "name": "Module 09 Task 3 — Creator earnings release",
+      "name": "Creator earnings release",
       "item": [
         {
           "name": "Preview Creator split and commission",
@@ -4322,7 +4322,7 @@
       ]
     },
     {
-      "name": "Module 09 Task 4 — Refunds and payment review",
+      "name": "Refunds and payment review",
       "item": [
         {
           "name": "Read campaign refunds",
@@ -4453,7 +4453,7 @@
       ]
     },
     {
-      "name": "Module 10 Task 1 - Campaign reviews",
+      "name": "Campaign reviews",
       "item": [
         {
           "name": "Brand: reviews for completed campaign",
@@ -4725,10 +4725,10 @@
           "name": "Creator: mark selected messages read"
         }
       ],
-      "name": "Module 10 Task 2 - Campaign conversations"
+      "name": "Campaign conversations"
     },
     {
-      "name": "Module 10 Task 3 - In-app notifications",
+      "name": "In-app notifications",
       "item": [
         {
           "name": "List my notifications",
@@ -4801,7 +4801,7 @@
       ]
     },
     {
-      "name": "Module 11 Task 4 - Filtered financial reports",
+      "name": "Filtered financial reports",
       "description": "Use a token for the route role. Reports include posted INR Test Mode ledger events only. Export matches the filters and is capped at 5,000 rows. Creator exports show only your own released earnings.",
       "item": [
         {

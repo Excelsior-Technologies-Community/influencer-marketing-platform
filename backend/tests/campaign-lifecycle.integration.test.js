@@ -6,7 +6,7 @@ import {pool} from '../src/config/db.js';
 import {callProcedure} from '../src/repositories/procedure.repository.js';
 import {hashPassword} from '../src/utils/password.js';
 import {campaignStatuses} from '../src/validators/campaign-lifecycle.validator.js';
-describe('Module 6 Task 4 lifecycle with actual MySQL',()=>{
+describe('lifecycle with actual MySQL',()=>{
  let app=createApp({logging:false}),platformId,categoryId,typeId,pdf;const users={},tokens={},ids=[],prefix=`life-${randomUUID()}`,password='Lifecycle-test-password-2026';
  const headers=(role='BRAND_ADMIN')=>({Authorization:`Bearer ${tokens[role]}`,'X-Requested-With':'InfluenceWeb'});
  const base=id=>`/api/v1/brand/campaigns/${id}`;
