@@ -10,7 +10,7 @@
   position:absolute;
   inset:0 0 auto;
   height:5px;
-  background:linear-gradient(90deg,#17624f 0%,#26a67a 58%,#e9a251 100%);
+  background:linear-gradient(90deg,#124b3b 0%,#227c5a 58%,#e9a251 100%);
   content:"";
 }
 .campaign-analytics-title{
@@ -26,7 +26,7 @@
   overflow-wrap:anywhere;
 }
 .campaign-analytics-title .eyebrow{
-  color:#17624f;
+  color:#124b3b;
   font-size:10px;
   letter-spacing:1.7px;
 }
@@ -206,7 +206,7 @@
   place-items:center;
   border-radius:7px;
   background:#dceee1;
-  color:#17624f;
+  color:#124b3b;
   content:"+";
   font-size:16px;
 }

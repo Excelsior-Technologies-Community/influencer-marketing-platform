@@ -40,7 +40,7 @@
   border:1px solid #d9e8dc;
   border-radius:22px;
   background:linear-gradient(145deg,#f1f7e9,#fff8e8);
-  color:#17624f;
+  color:#124b3b;
   box-shadow:0 7px 18px #1c553c14;
 }
 .brand-profile-editor .brand-logo-display img{border-radius:21px}
@@ -67,19 +67,19 @@
   font-weight:700;
 }
 .brand-logo-file-label input[type="file"]{width:100%;min-height:44px;padding:8px;border:1px solid #e0e9e2;border-radius:8px;background:#fff;color:#49586b;font:inherit;font-size:12px}
-.brand-logo-file-label input[type="file"]::file-selector-button{margin-right:10px;padding:8px 11px;border:0;border-radius:6px;background:#e8f3ec;color:#17624f;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.brand-logo-file-label input[type="file"]::file-selector-button{margin-right:10px;padding:8px 11px;border:0;border-radius:6px;background:#e8f3ec;color:#124b3b;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
 .brand-logo-file-label small{color:#728378;font-size:11px;font-weight:400}
 .brand-logo-editor .brand-actions{margin-top:13px}
 .brand-logo-editor .brand-actions .button,
 .brand-company-profile .brand-actions .button{
   border:0;
-  background:linear-gradient(105deg,#17624f,#218b68);
-  box-shadow:0 6px 16px #17624f26;
+  background:linear-gradient(105deg,#0b382d,#155b45);
+  box-shadow:0 6px 16px #124b3b26;
   font-size:13px;
   font-weight:700;
 }
 .brand-logo-editor .brand-actions .button:hover:not(:disabled),
-.brand-company-profile .brand-actions .button:hover:not(:disabled){background:linear-gradient(105deg,#104a3c,#17624f)}
+.brand-company-profile .brand-actions .button:hover:not(:disabled){background:linear-gradient(105deg,#082b23,#0b382d)}
 .brand-company-profile{
   padding:30px;
   border-radius:17px;
@@ -102,7 +102,7 @@
   border:1px solid #d5e8dc;
   border-radius:12px;
   background:linear-gradient(145deg,#e7f5eb,#fff4df);
-  color:#17624f;
+  color:#124b3b;
   font-size:12px;
   font-weight:800;
 }
@@ -125,7 +125,7 @@
 .brand-company-profile .brand-form input:hover,
 .brand-company-profile .brand-form textarea:hover{border-color:#aacbb6}
 .brand-company-profile .brand-form input:focus,
-.brand-company-profile .brand-form textarea:focus{border-color:#218b68;background:#fff;box-shadow:0 0 0 4px #218b681a;outline:0}
+.brand-company-profile .brand-form textarea:focus{border-color:#155b45;background:#fff;box-shadow:0 0 0 4px #155b451a;outline:0}
 .brand-company-profile .brand-form textarea{min-height:145px;line-height:1.65;resize:vertical}
 .brand-company-profile .brand-form .brand-profile-section-title{
   margin:10px 0 0;
