@@ -39,7 +39,7 @@ export async function callProcedure(name, parameters = []) {
   if (!procedures.has(name)) throw new Error('Unsupported database procedure');
   const placeholders = parameters.map(() => '?').join(',');
   const [results] = await pool.execute(`CALL ${name}(${placeholders})`, parameters);
-  return results[0];  
+  return results[0];
 }
 export async function callProcedureSets(name,parameters=[]) {
   if(!procedures.has(name))throw new Error('Unsupported database procedure');

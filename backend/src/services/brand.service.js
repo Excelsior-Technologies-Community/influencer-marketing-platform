@@ -21,7 +21,7 @@ export function profileReadiness(profile){
 }
 export const brandService={
   profile:async actor=>profileDto(await repository.get(actor)),
-  async dashboard(actor){const [profile,stats]=await Promise.all([this.profile(actor),repository.dashboard(actor)]);return {profile,readiness:profileReadiness(profile),campaigns:Object.fromEntries(Object.entries(stats).map(([key,value])=>[key,Number(value)]))};},
+  async dashboard(actor){const [profile,rows]=await Promise.all([this.profile(actor),repository.dashboard(actor)]),stats=rows[0]||{};return {profile,readiness:profileReadiness(profile),campaigns:{totalCampaigns:Number(stats.totalCampaigns||0),draftCampaigns:Number(stats.draftCampaigns||0),campaignsAwaitingReview:Number(stats.campaignsAwaitingReview||0),liveCampaigns:Number(stats.liveCampaigns||0),activeCampaigns:Number(stats.activeCampaigns||0),completedCampaigns:Number(stats.completedCampaigns||0),applicationsAwaitingDecision:Number(stats.applicationsAwaitingDecision||0),approvedCreators:Number(stats.approvedCreators||0)}};},
   update:async(actor,input,requestId)=>{
     const {companyName,website,industry,description,revision,...details}=input;
     return profileDto(await repository.update([actor,companyName,website,industry,description,JSON.stringify(details),revision,requestId]));

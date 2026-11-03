@@ -8,29 +8,29 @@ const failureText=error=>error.response?.data?.message||'Could not load campaign
 const money=(minor,currency='INR')=>minor===null||minor===undefined?'Not recorded':new Intl.NumberFormat(undefined,{style:'currency',currency,maximumFractionDigits:2}).format(Number(minor)/100);
 const budget=(amount,currency)=>amount===null?'Not set':new Intl.NumberFormat(undefined,{style:'currency',currency,maximumFractionDigits:2}).format(Number(amount));
 
-function Metric({label,value,note}){return <article><span>{label}</span><strong>{value}</strong>{note&&<small>{note}</small>}</article>;}
+function Metric({label,value,note,tone='slate',icon='•'}){return <article className={`campaign-metric campaign-metric--${tone}`}><div className="campaign-metric-heading"><span>{label}</span><span className="campaign-metric-icon" aria-hidden="true">{icon}</span></div><strong>{value}</strong>{note&&<small>{note}</small>}</article>;}
 
 function CampaignCard({campaign}){
   const spend=Number(campaign.releasedGrossMinor),budgetMinor=campaign.budgetMinor===null?null:Number(campaign.budgetMinor);
   const spentPercent=budgetMinor>0?Math.min(100,Math.round(spend/budgetMinor*100)):0;
   return <article className="admin-card campaign-analytics-card">
-    <div className="admin-section-heading campaign-analytics-title"><div><div className="eyebrow">CAMPAIGN PERFORMANCE</div><h2>{campaign.title}</h2></div><span className="state-pill">{campaign.status.replaceAll('_',' ')}</span></div>
+    <div className="admin-section-heading campaign-analytics-title"><div><div className="eyebrow">CAMPAIGN PERFORMANCE</div><h2>{campaign.title}</h2></div><span className={`state-pill campaign-status campaign-status--${campaign.status.toLowerCase()}`}>{campaign.status.replaceAll('_',' ')}</span></div>
     <div className="admin-stats campaign-analytics-stats">
-      <Metric label="Applications" value={campaign.applications}/>
-      <Metric label="Approved creators" value={campaign.approvedCreators}/>
-      <Metric label="Submitted deliverables" value={campaign.submittedDeliverables} note={`${campaign.approvedDeliverables} approved · ${campaign.requiredDeliverables} required`}/>
-      <Metric label="Campaign budget" value={budget(campaign.budgetAmount,campaign.currency)}/>
-      <Metric label="Captured funding (Test Mode)" value={campaign.currency!=='INR'?'Unavailable':campaign.fundedMinor===null?'Not funded':money(campaign.fundedMinor)}/>
-      <Metric label="Released from campaign (INR)" value={campaign.currency!=='INR'?'Unavailable':money(campaign.releasedGrossMinor)} note="Gross release, including Creator payout and commission"/>
+      <Metric label="Applications" value={campaign.applications} tone="blue" icon="↗"/>
+      <Metric label="Approved creators" value={campaign.approvedCreators} tone="green" icon="✓"/>
+      <Metric label="Submitted deliverables" value={campaign.submittedDeliverables} note={`${campaign.approvedDeliverables} approved · ${campaign.requiredDeliverables} required`} tone="violet" icon="▣"/>
+      <Metric label="Campaign budget" value={budget(campaign.budgetAmount,campaign.currency)} tone="amber" icon="₹"/>
+      <Metric label="Captured funding (Test Mode)" value={campaign.currency!=='INR'?'Unavailable':campaign.fundedMinor===null?'Not funded':money(campaign.fundedMinor)} tone="teal" icon="◉"/>
+      <Metric label="Released from campaign (INR)" value={campaign.currency!=='INR'?'Unavailable':money(campaign.releasedGrossMinor)} note="Gross release, including Creator payout and commission" tone="rose" icon="↗"/>
     </div>
     {campaign.currency==='INR'&&budgetMinor!==null&&<div className="campaign-spend-progress"><div><span>Budget released</span><strong>{spentPercent}%</strong></div><div className="creator-readiness-track" role="progressbar" aria-label={`${campaign.title} budget released`} aria-valuenow={spentPercent} aria-valuemin={0} aria-valuemax={100}><span style={{width:`${spentPercent}%`}}/></div></div>}
     <details className="campaign-analytics-details"><summary>Payment breakdown and performance data</summary><div className="admin-stats campaign-analytics-stats">
-      <Metric label="Creator wallets credited" value={money(campaign.creatorPayoutMinor)}/>
-      <Metric label="Platform commission" value={money(campaign.commissionMinor)}/>
-      <Metric label="Refunds processed" value={money(campaign.refundedMinor)}/>
-      <Metric label="Funds still held" value={campaign.currency!=='INR'?'Unavailable':money(campaign.heldMinor)}/>
-      <Metric label="Campaign reach" value="Not recorded"/>
-      <Metric label="Impressions, views and engagement" value="Not recorded"/>
+      <Metric label="Creator wallets credited" value={money(campaign.creatorPayoutMinor)} tone="green" icon="✓"/>
+      <Metric label="Platform commission" value={money(campaign.commissionMinor)} tone="amber" icon="₹"/>
+      <Metric label="Refunds processed" value={money(campaign.refundedMinor)} tone="rose" icon="↩"/>
+      <Metric label="Funds still held" value={campaign.currency!=='INR'?'Unavailable':money(campaign.heldMinor)} tone="teal" icon="◉"/>
+      <Metric label="Campaign reach" value="Not recorded" tone="blue" icon="◎"/>
+      <Metric label="Impressions, views and engagement" value="Not recorded" tone="violet" icon="▥"/>
     </div><p className="brand-helper">Campaign post-level reach, impressions, views and engagement have no recorded data source yet. Creator profile metrics are self-reported and are not substituted for campaign performance. Payment figures are posted INR Test Mode ledger entries; a configured budget in another currency cannot be compared with INR payments.</p></details>
   </article>;
 }

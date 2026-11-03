@@ -254,3 +254,345 @@ a,button,input,select,textarea{touch-action:manipulation}
   .app aside nav a{border-color:transparent}
   .app aside nav a.active{border-color:#ffffffa6}
 }
+
+/* Carry the analytics card style through every signed-in workspace. */
+.app .admin-card:not(.campaign-analytics-card){
+  border:1px solid color-mix(in srgb,var(--primary) 10%,var(--line));
+  border-radius:14px;
+  background:linear-gradient(145deg,#fff 64%,color-mix(in srgb,var(--primary-soft) 42%,#fff));
+  box-shadow:0 9px 26px color-mix(in srgb,var(--primary) 7%,transparent);
+}
+.app .admin-stats article:not(.campaign-metric){
+  --stat-accent:#607085;
+  --stat-bg:#f1f4f8;
+  min-width:0;
+  min-height:118px;
+  border:1px solid color-mix(in srgb,var(--stat-accent) 19%,#fff);
+  border-left:4px solid var(--stat-accent);
+  border-radius:12px;
+  background:linear-gradient(145deg,#fff 8%,var(--stat-bg));
+  box-shadow:0 5px 15px #172c3d09;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.app .admin-stats article:not(.campaign-metric):nth-child(6n+1){--stat-accent:#3879cf;--stat-bg:#eef5ff}
+.app .admin-stats article:not(.campaign-metric):nth-child(6n+2){--stat-accent:#21845a;--stat-bg:#eaf7ef}
+.app .admin-stats article:not(.campaign-metric):nth-child(6n+3){--stat-accent:#7955bd;--stat-bg:#f3efff}
+.app .admin-stats article:not(.campaign-metric):nth-child(6n+4){--stat-accent:#bd791c;--stat-bg:#fff6e8}
+.app .admin-stats article:not(.campaign-metric):nth-child(6n+5){--stat-accent:#18878a;--stat-bg:#eaf8f7}
+.app .admin-stats article:not(.campaign-metric):nth-child(6n){--stat-accent:#bf5279;--stat-bg:#fff0f5}
+.app .admin-stats article:not(.campaign-metric) span{color:#536176;font-weight:600;line-height:1.45}
+.app .admin-stats article:not(.campaign-metric) strong{color:#1c2b3c;font-size:clamp(23px,2.2vw,31px);overflow-wrap:anywhere}
+.app .admin-stats article:not(.campaign-metric) small{color:#68778b;line-height:1.5}
+.app .admin-stats article:not(.campaign-metric):hover{transform:translateY(-2px);box-shadow:0 10px 22px #172c3d12}
+.app .admin-table-wrap{border-radius:11px;box-shadow:0 4px 15px #172c3d08}
+.app .admin-table-wrap tbody tr{transition:background-color .16s ease}
+.app .admin-table-wrap tbody tr:hover{background:color-mix(in srgb,var(--primary-soft) 55%,#fff)}
+.app .admin-table-wrap th{font-weight:700;letter-spacing:.025em}
+.app .state-pill{border:1px solid color-mix(in srgb,var(--accent) 16%,#fff);border-radius:999px;padding:6px 10px;font-weight:700}
+.app details:not(.campaign-analytics-details)>summary{
+  display:flex;
+  min-height:42px;
+  align-items:center;
+  gap:9px;
+  padding:9px 12px;
+  border-radius:9px;
+  background:var(--primary-soft);
+  color:var(--primary);
+  cursor:pointer;
+  font-weight:700;
+  list-style:none;
+}
+.app details:not(.campaign-analytics-details)>summary::-webkit-details-marker{display:none}
+.app details:not(.campaign-analytics-details)>summary::before{
+  color:var(--accent);
+  content:"＋";
+  font-size:15px;
+  font-weight:800;
+}
+.app details:not(.campaign-analytics-details)[open]>summary::before{content:"−"}
+.app details:not(.campaign-analytics-details)>summary:hover{filter:brightness(.97)}
+.app .admin-empty,.app .empty{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));background:linear-gradient(145deg,#fff,var(--accent-soft));border-radius:13px}
+.app .admin-tabs a,.app .admin-tabs button{transition:background-color .16s ease,color .16s ease,border-color .16s ease}
+@media(max-width:760px){
+  .app .admin-stats article:not(.campaign-metric){min-height:102px;padding:15px}
+  .app .admin-card:not(.campaign-analytics-card){border-radius:12px}
+}
+@media(prefers-reduced-motion:reduce){.app .admin-stats article:not(.campaign-metric){transition:none}}
+
+/* Brand-profile visual language shared by all role workspaces. */
+.app main .admin-card:not(.campaign-analytics-card){
+  border-radius:16px;
+  background:radial-gradient(ellipse at 100% 0%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 34%),linear-gradient(145deg,#fff 64%,color-mix(in srgb,var(--primary-soft) 50%,#fff));
+  box-shadow:0 12px 30px color-mix(in srgb,var(--primary) 8%,transparent);
+}
+.app main .admin-card h2{font-size:clamp(20px,2vw,25px);letter-spacing:-.4px}
+.app main .admin-card h3{color:var(--primary)}
+.app main .admin-card label{
+  color:var(--primary);
+  font-size:13px;
+  font-weight:600;
+}
+.app main .admin-card input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.app main .admin-card select,
+.app main .admin-card textarea{
+  min-height:48px;
+  padding:12px 14px;
+  border:1px solid color-mix(in srgb,var(--primary) 17%,var(--line));
+  border-radius:9px;
+  background:#fff;
+  color:var(--ink);
+  font:inherit;
+  font-size:14px;
+  box-shadow:inset 0 1px 2px #172c3d08;
+  transition:border-color .16s ease,box-shadow .16s ease,background-color .16s ease;
+}
+.app main .admin-card textarea{min-height:112px;line-height:1.65;resize:vertical}
+.app main .admin-card input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover,
+.app main .admin-card select:hover,
+.app main .admin-card textarea:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.app main .admin-card input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+.app main .admin-card select:focus,
+.app main .admin-card textarea:focus{
+  border-color:var(--accent);
+  background:#fff;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 16%,transparent);
+  outline:0;
+}
+.app main .admin-card input[type="file"]{
+  max-width:100%;
+  min-height:44px;
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#fff;
+  color:var(--muted);
+  font:inherit;
+  font-size:12px;
+}
+.app main .admin-card input[type="file"]::file-selector-button{
+  margin-right:10px;
+  padding:8px 12px;
+  border:0;
+  border-radius:7px;
+  background:var(--primary-soft);
+  color:var(--primary);
+  font:inherit;
+  font-weight:700;
+  cursor:pointer;
+}
+.app main .admin-card button:not(.button):not(.status){min-height:44px;border-radius:9px;font-weight:600}
+.app main .admin-card .button{min-height:46px;border-radius:9px;padding:12px 18px;font-size:13px;font-weight:700}
+.app main .admin-card .brand-actions{gap:10px}
+.app main .admin-card .brand-actions>*{max-width:100%}
+.app main .admin-card .form-success,.app main .admin-card .form-error{padding:12px 14px;border-radius:9px;line-height:1.6}
+.app main .admin-card .admin-section-heading{gap:14px}
+.app main .admin-card .admin-section-heading h2{line-height:1.3}
+.app main .admin-card .admin-table-wrap{border-radius:11px;background:#fff}
+.app main .admin-card .admin-table-wrap th{padding:15px 14px}
+.app main .admin-card .admin-table-wrap td{padding:15px 14px}
+.app main .admin-card details>summary{font-size:13px}
+.app main .admin-card .brand-helper{line-height:1.7}
+.app main .auth-card{
+  border:1px solid color-mix(in srgb,var(--primary) 15%,var(--line));
+  border-radius:18px;
+  background:radial-gradient(ellipse at 100% 0%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 35%),linear-gradient(145deg,#fff 66%,var(--primary-soft));
+  box-shadow:0 16px 38px color-mix(in srgb,var(--primary) 11%,transparent);
+}
+.app main .auth-card h1{color:var(--ink);font-size:clamp(28px,4vw,38px);letter-spacing:-1.2px}
+.app main .auth-card label{color:var(--primary);font-size:14px;font-weight:600}
+.app main .auth-card input,.app main .auth-card select{
+  min-height:50px;
+  padding:12px 14px;
+  border:1px solid color-mix(in srgb,var(--primary) 18%,var(--line));
+  border-radius:9px;
+  background:#fff;
+  color:var(--ink);
+  font:inherit;
+  font-size:14px;
+}
+.app main .auth-card input:focus,.app main .auth-card select:focus{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 17%,transparent);outline:0}
+.app main .auth-card form>.button{width:100%;min-height:49px;border-radius:10px;font-size:14px;font-weight:700}
+.app main .auth-card .auth-links a{color:var(--primary);font-weight:600}
+@media(max-width:760px){
+  .app main .admin-card:not(.campaign-analytics-card){border-radius:13px}
+  .app main .admin-card{padding:18px}
+  .app main .auth-card{padding:24px 20px;border-radius:15px}
+  .app main .admin-card label{font-size:13px}
+  .app main .admin-card .brand-actions{align-items:stretch}
+  .app main .admin-card .brand-actions button,.app main .admin-card .brand-actions a{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){
+  .app main .admin-card input,.app main .admin-card select,.app main .admin-card textarea{transition:none}
+}
+
+/* Consistent spacing scale across every workspace. */
+.app{
+  --space-1:6px;
+  --space-2:10px;
+  --space-3:14px;
+  --space-4:18px;
+  --space-5:24px;
+  --space-6:32px;
+}
+.app main{
+  padding:clamp(24px,3.4vw,46px) clamp(18px,3.6vw,48px) 36px;
+}
+.app main>.eyebrow{margin-bottom:10px}
+.app main>.eyebrow+h1{margin:10px 0 16px}
+.app main>.admin-section-heading{margin:8px 0 18px}
+.app main .admin-section-heading{gap:var(--space-3)}
+.app main .admin-section-heading h1,
+.app main .admin-section-heading h2{line-height:1.28}
+.app main .admin-card:not(.campaign-analytics-card){
+  margin-block:16px;
+  padding:clamp(18px,2vw,26px);
+}
+.app main .brand-profile-editor>.admin-card:not(.campaign-analytics-card){margin:0}
+.app main>.admin-card:not(.campaign-analytics-card):first-child{margin-top:0}
+.app main .admin-stats{gap:var(--space-3)}
+.app main .admin-stats article:not(.campaign-metric){padding:clamp(15px,1.6vw,21px)}
+.app main .brand-form,
+.app main .creator-upload-form,
+.app main .campaign-schedule-fields,
+.app main .content-submission-form fieldset{gap:clamp(14px,1.6vw,20px)}
+.app main .brand-actions{gap:var(--space-2);margin-top:var(--space-3)}
+.app main .admin-pagination{margin-block:var(--space-3)}
+.app main .admin-tabs{gap:var(--space-2);margin-block:var(--space-4)}
+.app main .admin-table-wrap th,
+.app main .admin-table-wrap td{padding:clamp(11px,1.2vw,15px)}
+.app header{padding-inline:clamp(16px,3.4vw,48px)}
+.app footer{margin-inline:clamp(16px,3.4vw,48px);padding-block:18px}
+@media(max-width:760px){
+  .app main{padding:24px 16px 26px}
+  .app main>.admin-section-heading{margin:6px 0 14px}
+  .app main .admin-card:not(.campaign-analytics-card){margin-block:12px;padding:18px}
+  .app main .admin-stats{gap:10px}
+  .app main .brand-actions{gap:9px}
+  .app main .admin-tabs{margin-block:14px;padding-bottom:12px}
+  .app footer{margin-inline:16px;padding-block:15px}
+}
+@media(max-width:420px){
+  .app main{padding:20px 12px 22px}
+  .app main .admin-card:not(.campaign-analytics-card){padding:15px}
+  .app header{padding-inline:12px}
+  .app footer{margin-inline:12px}
+}
+.app .campaign-management .wallet-history-filters{
+  display:grid;
+  grid-template-columns:minmax(150px,1.1fr) repeat(2,minmax(155px,1fr)) auto auto;
+  align-items:end;
+  gap:14px;
+  margin:20px 0 24px;
+  padding:20px;
+  border:1px solid color-mix(in srgb,var(--primary) 13%,var(--line));
+  border-radius:13px;
+  background:linear-gradient(120deg,var(--primary-soft),#fff 55%,color-mix(in srgb,var(--accent-soft) 60%,#fff));
+  box-shadow:inset 0 1px #ffffffd9;
+}
+.app .campaign-management .wallet-history-filters label{
+  display:grid;
+  min-width:0;
+  width:auto;
+  gap:9px;
+  color:var(--primary);
+  font-size:13px;
+  font-weight:650;
+}
+.app .campaign-management .wallet-history-filters select,
+.app .campaign-management .wallet-history-filters input{
+  width:100%;
+  min-width:0;
+  min-height:49px;
+  padding:12px 14px;
+  border:1px solid color-mix(in srgb,var(--primary) 18%,var(--line));
+  border-radius:9px;
+  background:#fff;
+  color:var(--ink);
+  font:inherit;
+  font-size:14px;
+}
+.app .campaign-management .wallet-history-filters button{
+  min-height:49px;
+  padding:11px 16px;
+  white-space:nowrap;
+}
+.app .campaign-management .wallet-history-filters .button{color:#fff;background:var(--primary)}
+.app .campaign-management .wallet-history-filters .button:hover:not(:disabled){background:var(--primary-hover)}
+.app .campaign-management .wallet-empty-state{
+  margin:20px 0 8px;
+  padding:17px 19px;
+  border:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));
+  border-radius:11px;
+  background:linear-gradient(110deg,var(--accent-soft),#fff 72%);
+  color:var(--muted);
+}
+@media(max-width:1050px){
+  .app .campaign-management .wallet-history-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:17px}
+}
+@media(max-width:560px){
+  .app .campaign-management .wallet-history-filters{grid-template-columns:minmax(0,1fr);gap:13px;margin:15px 0 19px;padding:14px}
+  .app .campaign-management .wallet-history-filters button{width:100%;white-space:normal}
+  .app .campaign-management .wallet-empty-state{margin-top:16px;padding:15px}
+}
+
+/* Campaign workspace page spacing and filter layout. */
+.app main .campaign-workspaces>.eyebrow{margin-bottom:12px}
+.app main .campaign-workspaces>.admin-section-heading{align-items:center;margin:0 0 12px}
+.app main .campaign-workspaces>.admin-section-heading h1{margin:0;line-height:1.2}
+.app main .campaign-workspaces>.admin-section-heading button{flex:0 0 auto;padding:11px 16px}
+.app main .campaign-workspaces>.workspace-description{max-width:760px;margin:0 0 22px;color:var(--muted);line-height:1.7}
+.app main .campaign-workspaces>.admin-card{margin:0 0 22px;padding:clamp(20px,2.2vw,28px)}
+.app main .campaign-workspaces .workspace-filters{
+  display:grid;
+  grid-template-columns:minmax(220px,1.35fr) minmax(190px,1fr) auto auto;
+  align-items:end;
+  gap:16px;
+  margin:0;
+}
+.app main .campaign-workspaces .workspace-filters label{
+  display:grid;
+  min-width:0;
+  gap:9px;
+  color:var(--primary);
+  font-size:13px;
+  font-weight:650;
+}
+.app main .campaign-workspaces .workspace-filters input,
+.app main .campaign-workspaces .workspace-filters select{
+  width:100%;
+  min-width:0;
+  min-height:48px;
+  padding:11px 14px;
+  border:1px solid color-mix(in srgb,var(--primary) 18%,var(--line));
+  border-radius:9px;
+  background:var(--surface);
+  color:var(--ink);
+  font:inherit;
+}
+.app main .campaign-workspaces .workspace-filters button{
+  min-height:48px;
+  padding:11px 16px;
+  white-space:nowrap;
+}
+.app main .campaign-workspaces .workspace-filters button:first-of-type{background:var(--primary);border-color:var(--primary);color:#fff}
+.app main .campaign-workspaces .workspace-filters button:first-of-type:hover:not(:disabled){background:var(--primary-hover)}
+.app main .campaign-workspaces>.admin-card+.form-error,
+.app main .campaign-workspaces>.admin-card+ [role="status"]{margin:18px 0;padding:14px 16px}
+.app main .campaign-workspaces>.admin-card~.admin-card{margin-top:22px}
+@media(max-width:1050px){
+  .app main .campaign-workspaces .workspace-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+}
+@media(max-width:760px){
+  .app main .campaign-workspaces>.admin-section-heading{align-items:flex-start}
+  .app main .campaign-workspaces>.workspace-description{margin-bottom:17px}
+  .app main .campaign-workspaces>.admin-card{margin-bottom:16px;padding:18px}
+  .app main .campaign-workspaces .workspace-filters{gap:13px}
+  .app main .campaign-workspaces .workspace-filters label{grid-column:1/-1}
+  .app main .campaign-workspaces .workspace-filters button{width:100%;white-space:normal}
+}
+@media(max-width:420px){
+  .app main .campaign-workspaces>.admin-section-heading{display:grid}
+  .app main .campaign-workspaces>.admin-section-heading button{width:100%}
+  .app main .campaign-workspaces .workspace-filters{grid-template-columns:minmax(0,1fr)}
+  .app main .campaign-workspaces .workspace-filters label{grid-column:auto}
+}

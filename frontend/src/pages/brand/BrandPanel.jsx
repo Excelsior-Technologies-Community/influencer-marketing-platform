@@ -3,6 +3,7 @@ import { NavLink,useLocation } from 'react-router-dom';
 import { api } from '../../services/api.js';
 import BrandCampaignAnalytics from './BrandCampaignAnalytics.jsx';
 import FinancialReports from '../analytics/FinancialReports.jsx';
+import './BrandProfile.css';
 const sections=[['','Overview'],['profile','Company profile'],['billing','Billing details'],['analytics','Campaign analytics'],['reports','Financial reports']];
 const errorText=error=>error.response?.data?.errors?.map(item=>`${item.field}: ${item.message}`).join('. ')||error.response?.data?.message||'Could not connect. Please try again.';
 function writable(profile){return {revision:profile.revision,companyName:profile.companyName,website:profile.website,industry:profile.industry,description:profile.description,contactName:profile.contactName,contactEmail:profile.contactEmail,phone:profile.phone,location:profile.location,socialLinks:profile.socialLinks,billing:profile.billing};}
@@ -24,13 +25,13 @@ function LogoEditor({profile,onProfile,onReload}){
     try {let result;if(remove)result=await api.delete('/brand/profile/logo',{data:{revision:profile.logoRevision}});else{const body=new FormData();body.append('revision',String(profile.logoRevision));body.append('logo',file);result=await api.post('/brand/profile/logo',body);}onProfile(result.data.data.profile,remove?'Company logo removed.':'Company logo saved.');}
     catch(failure){setError(errorText(failure));}finally{setBusy(false);}
   }
-  return <section className="admin-card brand-logo-editor"><div><LogoImage profile={profile}/></div><div><h3>Company logo</h3><p>PNG, JPEG or WebP, up to 2 MiB. The logo is resized for your workspace.</p><label>Choose company logo<input type="file" accept=".png,.jpg,.jpeg,.webp" onChange={event=>setFile(event.target.files?.[0]||null)}/></label><div className="brand-actions"><button className="button" disabled={busy} onClick={()=>change(false)}>{busy?'Please wait…':'Upload logo'}</button>{profile.logo&&<button disabled={busy} onClick={()=>change(true)}>Remove logo</button>}</div>{error&&<><p role="alert" className="form-error">{error}</p><button onClick={onReload}>Reload latest profile</button></>}{message&&<p role="status" className="form-success">{message}</p>}</div></section>;
+  return <section className="admin-card brand-logo-editor"><div className="brand-logo-preview-wrap"><LogoImage profile={profile}/><span>BRAND MARK</span></div><div className="brand-logo-content"><div className="brand-profile-kicker">VISUAL IDENTITY</div><h3>Company logo</h3><p>Upload a clear logo so Creators can recognize your Brand in campaign listings and workspaces.</p><label className="brand-logo-file-label">Choose company logo<input type="file" accept=".png,.jpg,.jpeg,.webp" onChange={event=>setFile(event.target.files?.[0]||null)}/><small>PNG, JPEG or WebP · up to 2 MiB</small></label><div className="brand-actions"><button className="button" disabled={busy} onClick={()=>change(false)}>{busy?'Please wait…':'Upload logo'}</button>{profile.logo&&<button disabled={busy} onClick={()=>change(true)}>Remove logo</button>}</div>{error&&<><p role="alert" className="form-error">{error}</p><button onClick={onReload}>Reload latest profile</button></>}{message&&<p role="status" className="form-success">{message}</p>}</div></section>;
 }
 function CompanyProfile({profile,onProfile,onReload}){
   const [form,setForm]=useState(writable(profile)),[busy,setBusy]=useState(false),[error,setError]=useState(''),[message,setMessage]=useState('');
   const change=(name,value)=>setForm(old=>({...old,[name]:value}));
   async function save(event){event.preventDefault();setError('');setMessage('');setBusy(true);try{const result=await api.put('/brand/profile',{...form,revision:profile.revision});onProfile(result.data.data.profile,'Company profile saved.');}catch(failure){setError(errorText(failure));}finally{setBusy(false);}}
-  return <><LogoEditor profile={profile} onProfile={onProfile} onReload={onReload}/><section className="admin-card"><h2>Company information</h2><form className="brand-form" onSubmit={save}>
+  return <div className="brand-profile-editor"><LogoEditor profile={profile} onProfile={onProfile} onReload={onReload}/><section className="admin-card brand-company-profile"><div className="brand-profile-heading"><span className="brand-profile-number">01</span><div><div className="brand-profile-kicker">YOUR BRAND IDENTITY</div><h2>Company information</h2><p>Complete these details so Creators know who they’ll be working with.</p></div></div><form className="brand-form" onSubmit={save}>
     <Field label="Company name" name="companyName" value={form.companyName} onChange={change} maxLength={160} minLength={2} required/>
     <Field label="Industry" name="industry" value={form.industry} onChange={change} maxLength={120}/>
     <Field label="Website" name="website" value={form.website} onChange={change} type="url" maxLength={2048}/>
@@ -39,10 +40,10 @@ function CompanyProfile({profile,onProfile,onReload}){
     <Field label="Contact email" name="contactEmail" value={form.contactEmail} onChange={change} type="email" maxLength={254}/>
     <Field label="Phone" name="phone" value={form.phone} onChange={change} type="tel" maxLength={32}/>
     <label className="full-width">Company description<textarea name="description" value={form.description||''} onChange={event=>change('description',event.target.value)} maxLength={5000} rows={5}/></label>
-    <h3 className="full-width">Social links</h3>{['instagram','facebook','youtube'].map(platform=><Field key={platform} label={`${{instagram:'Instagram',facebook:'Facebook',youtube:'YouTube'}[platform]} URL`} name={platform} value={form.socialLinks[platform]} type="url" maxLength={2048} onChange={(name,value)=>setForm(old=>({...old,socialLinks:{...old.socialLinks,[name]:value}}))}/>)}
+    <h3 className="full-width brand-profile-section-title">Social links</h3><p className="full-width brand-profile-section-note">Add official public profiles to help Creators verify they’re viewing the right Brand.</p>{['instagram','facebook','youtube'].map(platform=><Field key={platform} label={`${{instagram:'Instagram',facebook:'Facebook',youtube:'YouTube'}[platform]} URL`} name={platform} value={form.socialLinks[platform]} type="url" maxLength={2048} onChange={(name,value)=>setForm(old=>({...old,socialLinks:{...old.socialLinks,[name]:value}}))}/>)}
     {error&&<div className="full-width"><p role="alert" className="form-error">{error}</p><button type="button" onClick={onReload}>Reload latest profile (discard changes)</button></div>}{message&&<p role="status" className="form-success full-width">{message}</p>}
     <div className="full-width brand-actions"><button className="button" disabled={busy}>{busy?'Saving…':'Save company profile'}</button></div>
-  </form></section></>;
+  </form></section></div>;
 }
 function BillingProfile({profile,onProfile,onReload}){
   const [billing,setBilling]=useState(profile.billing),[busy,setBusy]=useState(false),[error,setError]=useState(''),[message,setMessage]=useState('');

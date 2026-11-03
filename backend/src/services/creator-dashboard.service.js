@@ -30,8 +30,9 @@ export function dashboardDto([profiles,categories,accounts,assets,availability])
   };
 }
 export const creatorDashboardService={get:async actor=>{
-  const [sets,roleDashboard]=await Promise.all([creatorRepository.dashboard(actor),creatorRepository.roleDashboard(actor)]);
+  const [sets,roleRows]=await Promise.all([creatorRepository.dashboard(actor),creatorRepository.roleDashboard(actor)]);
   const result=dashboardDto(sets);
-  result.campaigns=Object.fromEntries(Object.entries(roleDashboard).map(([key,value])=>[key,Number(value)]));
+  const stats=roleRows[0]||{};
+  result.campaigns={totalApplications:Number(stats.totalApplications||0),applicationsAwaitingDecision:Number(stats.applicationsAwaitingDecision||0),approvedCollaborations:Number(stats.approvedCollaborations||0),activeCollaborations:Number(stats.activeCollaborations||0),completedCollaborations:Number(stats.completedCollaborations||0)};
   return result;
 }};

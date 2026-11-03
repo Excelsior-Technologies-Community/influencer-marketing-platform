@@ -1,1 +1,237 @@
-.campaign-analytics-card{padding:22px}.campaign-analytics-title{align-items:flex-start;margin:0 0 20px}.campaign-analytics-title h2{font-size:21px;margin:9px 0 0;overflow-wrap:anywhere}.campaign-analytics-stats{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:0 0 18px}.campaign-analytics-stats article{padding:15px}.campaign-analytics-stats strong{font-size:23px;overflow-wrap:anywhere}.campaign-analytics-stats small{display:block;color:#7a8872;font-size:11px;line-height:1.5;margin-top:6px}.campaign-spend-progress{max-width:520px;margin:20px 0}.campaign-spend-progress>div:first-child{display:flex;justify-content:space-between;font-size:12px;color:#66765e;margin-bottom:8px}.campaign-spend-progress .creator-readiness-track{height:11px}.campaign-analytics-details{border-top:1px solid #e5eadf;padding-top:15px}.campaign-analytics-details summary{cursor:pointer;color:#426237;font-size:13px;font-weight:600}.campaign-analytics-details>.admin-stats{margin-top:17px}.campaign-analytics-details .brand-helper{max-width:850px;margin-bottom:0}@media(max-width:600px){.campaign-analytics-card{padding:16px}.campaign-analytics-title{display:grid}.campaign-analytics-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.campaign-analytics-stats article{padding:12px}.campaign-analytics-stats strong{font-size:19px}}
+.campaign-analytics-card{
+  position:relative;
+  overflow:hidden;
+  padding:26px;
+  border-radius:16px;
+  background:linear-gradient(145deg,#fff 58%,#f5fbf8 100%);
+  box-shadow:0 12px 32px #173d2f0a;
+}
+.campaign-analytics-card::before{
+  position:absolute;
+  inset:0 0 auto;
+  height:5px;
+  background:linear-gradient(90deg,#17624f 0%,#26a67a 58%,#e9a251 100%);
+  content:"";
+}
+.campaign-analytics-title{
+  align-items:flex-start;
+  margin:0 0 22px;
+  gap:16px;
+}
+.campaign-analytics-title h2{
+  margin:7px 0 0;
+  color:#1c2a26;
+  font-size:clamp(20px,2vw,25px);
+  letter-spacing:-.5px;
+  overflow-wrap:anywhere;
+}
+.campaign-analytics-title .eyebrow{
+  color:#17624f;
+  font-size:10px;
+  letter-spacing:1.7px;
+}
+.app .campaign-analytics-card .campaign-status{
+  flex:none;
+  padding:7px 12px;
+  border:1px solid #d6eadd;
+  border-radius:999px;
+  background:#eaf7ef;
+  color:#17623e;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.055em;
+}
+.app .campaign-analytics-card .campaign-status--expired,
+.app .campaign-analytics-card .campaign-status--cancelled{
+  border-color:#e1e5eb;
+  background:#f0f2f5;
+  color:#586273;
+}
+.app .campaign-analytics-card .campaign-status--pending_approval,
+.app .campaign-analytics-card .campaign-status--draft{
+  border-color:#f4dfb5;
+  background:#fff5df;
+  color:#86510e;
+}
+.app .campaign-analytics-card .campaign-status--rejected{
+  border-color:#f0d2d2;
+  background:#fff0f0;
+  color:#a3222e;
+}
+.campaign-analytics-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin:0 0 20px;
+}
+.app .campaign-analytics-card .campaign-metric{
+  --metric-accent:#607085;
+  --metric-bg:#f1f4f8;
+  --metric-border:#dfe6ee;
+  min-width:0;
+  min-height:136px;
+  padding:17px 18px;
+  border:1px solid var(--metric-border);
+  border-left:4px solid var(--metric-accent);
+  border-radius:12px;
+  background:linear-gradient(145deg,#fff 5%,var(--metric-bg) 100%);
+  box-shadow:0 5px 14px #172c3d08;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.app .campaign-analytics-card .campaign-metric:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px #172c3d12;
+}
+.app .campaign-analytics-card .campaign-metric--blue{--metric-accent:#3879cf;--metric-bg:#eef5ff;--metric-border:#d9e8fa}
+.app .campaign-analytics-card .campaign-metric--green{--metric-accent:#21845a;--metric-bg:#eaf7ef;--metric-border:#d3ebdc}
+.app .campaign-analytics-card .campaign-metric--violet{--metric-accent:#7955bd;--metric-bg:#f3efff;--metric-border:#e5ddf6}
+.app .campaign-analytics-card .campaign-metric--amber{--metric-accent:#bd791c;--metric-bg:#fff6e8;--metric-border:#f2e4c8}
+.app .campaign-analytics-card .campaign-metric--teal{--metric-accent:#18878a;--metric-bg:#eaf8f7;--metric-border:#d3eeeb}
+.app .campaign-analytics-card .campaign-metric--rose{--metric-accent:#bf5279;--metric-bg:#fff0f5;--metric-border:#f3dce5}
+.app .campaign-analytics-card .campaign-metric--slate{--metric-accent:#607085;--metric-bg:#f1f4f8;--metric-border:#dfe6ee}
+.campaign-metric-heading{
+  display:flex;
+  min-height:35px;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  color:#536176;
+  font-size:12px;
+  font-weight:600;
+  line-height:1.4;
+}
+.campaign-metric-icon{
+  display:grid;
+  width:32px;
+  height:32px;
+  flex:none;
+  place-items:center;
+  border:1px solid color-mix(in srgb,var(--metric-accent) 18%,transparent);
+  border-radius:10px;
+  background:color-mix(in srgb,var(--metric-accent) 10%,white);
+  color:var(--metric-accent);
+  font-size:16px;
+  font-weight:800;
+}
+.app .campaign-analytics-card .campaign-metric-heading .campaign-metric-icon{
+  display:grid;
+  place-items:center;
+  padding:0;
+  color:var(--metric-accent);
+  font-size:16px;
+  font-weight:800;
+  line-height:1;
+  text-align:center;
+}
+.app .campaign-analytics-card .campaign-metric strong{
+  display:block;
+  margin-top:12px;
+  color:#19283b;
+  font-size:clamp(21px,2.3vw,29px);
+  font-weight:700;
+  letter-spacing:-.7px;
+  line-height:1.2;
+  overflow-wrap:anywhere;
+}
+.app .campaign-analytics-card .campaign-metric small{
+  display:block;
+  margin-top:8px;
+  color:#68778b;
+  font-size:11px;
+  line-height:1.5;
+}
+.campaign-spend-progress{
+  max-width:680px;
+  margin:8px 0 22px;
+  padding:16px 18px 12px;
+  border:1px solid #dcece2;
+  border-radius:12px;
+  background:linear-gradient(110deg,#f0faf4,#fff 85%);
+}
+.campaign-spend-progress>div:first-child{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+  color:#526c5c;
+  font-size:12px;
+  font-weight:600;
+}
+.campaign-spend-progress>div:first-child strong{
+  padding:5px 10px;
+  border-radius:999px;
+  background:#dff2e5;
+  color:#17623e;
+  font-size:12px;
+}
+.campaign-spend-progress .creator-readiness-track{
+  height:12px;
+  overflow:hidden;
+  border:1px solid #d9eadf;
+  border-radius:999px;
+  background:#e8f1eb;
+}
+.campaign-spend-progress .creator-readiness-track span{
+  min-width:0;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#18865e,#53bd83 75%,#e5b45c);
+  transition:width .35s ease;
+}
+.campaign-analytics-details{
+  margin-top:20px;
+  padding-top:16px;
+  border-top:1px solid #e1e9e3;
+}
+.campaign-analytics-details summary{
+  display:flex;
+  min-height:42px;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px;
+  border-radius:9px;
+  background:#f1f7f2;
+  color:#246044;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  list-style:none;
+}
+.campaign-analytics-details summary::-webkit-details-marker{display:none}
+.campaign-analytics-details summary::before{
+  display:grid;
+  width:23px;
+  height:23px;
+  flex:none;
+  place-items:center;
+  border-radius:7px;
+  background:#dceee1;
+  color:#17624f;
+  content:"+";
+  font-size:16px;
+}
+.campaign-analytics-details[open] summary::before{content:"−"}
+.campaign-analytics-details summary:hover{background:#e8f3ea}
+.campaign-analytics-details>.admin-stats{margin-top:16px}
+.campaign-analytics-details .brand-helper{max-width:900px;margin-bottom:0;line-height:1.75}
+@media(max-width:900px){
+  .campaign-analytics-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .campaign-analytics-card{padding:19px 16px;border-radius:13px}
+  .campaign-analytics-title{display:flex;align-items:flex-start}
+  .campaign-analytics-title h2{font-size:20px}
+  .campaign-analytics-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .app .campaign-analytics-card .campaign-metric{min-height:126px;padding:13px 12px}
+  .campaign-metric-heading{align-items:flex-start;font-size:11px}
+  .campaign-metric-icon{width:27px;height:27px;border-radius:8px;font-size:14px}
+  .app .campaign-analytics-card .campaign-metric strong{font-size:19px;letter-spacing:-.3px}
+  .app .campaign-analytics-card .campaign-metric small{font-size:10px}
+}
+@media(max-width:380px){
+  .campaign-analytics-stats{grid-template-columns:minmax(0,1fr)}
+  .app .campaign-analytics-card .campaign-metric{min-height:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .app .campaign-analytics-card .campaign-metric,.campaign-spend-progress .creator-readiness-track span{transition:none}
+}
